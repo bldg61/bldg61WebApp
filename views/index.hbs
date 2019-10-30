@@ -1,10 +1,12 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
 
-<p>{{event1.title}}</p>
-<p>{{event1.start}}</p>
-<p>{{event1.seats}}</p>
-<p>{{event1.seats_taken}}</p>
-<p>{{seatsAvailable}}</p>
-<p>{{event1.url.public}}</p>
-<p>{{event1.color}}</p>
+{{#each events}}
+
+  <p>{{title}}</p>
+  <p>{{start}}</p>
+  <p>{{seats}}</p>
+  <p>{{seats_taken}}</p>
+  <p>{{url.public}}</p>
+  <p>{{color}}</p>
+{{/each}}
