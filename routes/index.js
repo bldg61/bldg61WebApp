@@ -2,11 +2,19 @@ const axios = require('axios');
 var express = require('express');
 var router = express.Router();
 
+const getNewToken = require('../lib/getNewToken');
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  const url = 'https://calendar.boulderlibrary.org/1.1/events?cal_id=3426'
+  if (!process.env.ACCESS_TOKEN) { return getNewToken(res) }
 
-  axios.get(url, { headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN}` } })
+  const url = process.env.EVENTS_URL
+  const config = {
+    headers: {
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+    }
+  }
+  axios.get(url, config)
   .then(function (response) {
     const events = response.data.events
 
@@ -16,9 +24,22 @@ router.get('/', async function(req, res, next) {
     });
   })
   .catch(function (error) {
-    console.log(error);
-    if (error.response.data.error_description === 'The access token provided has expired') {
-      process.env.ACCESS_TOKEN = getNewToken()
+    const connectionError = !error.response
+    const tokenError = error.response.data.error_description === 'The access token provided has expired' ||
+    error.response.data.error_description === 'The access token provided is invalid'
+
+    if (connectionError) {
+      res.render('error', {
+        error : {
+          status: error.errno,
+          stack: 'Oh Noes! Something just did a sads.'
+        },
+        message: error.code,
+      });
+    }
+
+    if (tokenError) {
+      return getNewToken(res)
     }
 
     res.render('error', {
@@ -30,9 +51,5 @@ router.get('/', async function(req, res, next) {
     });
   })
 });
-
-function getNewToken() {
-  return "OH NOES THE TOKEN NOOOOOOO"
-}
 
 module.exports = router;
