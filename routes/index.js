@@ -9,8 +9,11 @@ hbs.registerHelper({
   date: (start) => {
     return new Intl.DateTimeFormat('en-US').format(new Date(start))
   },
-  seats_available: (seats, seats_taken) => {
-    return seats - seats_taken
+  seats_available: (seats, seats_taken, registration) => {
+    if (registration) {
+      return `${seats - seats_taken}  seats available`
+    }
+    return `open availability`
   },
   time: (start) => {
     return new Intl.DateTimeFormat('en-US', {hour: 'numeric' }).format(new Date(start))
