@@ -1,8 +1,21 @@
 const axios = require('axios');
 var express = require('express');
+var hbs = require('hbs');
 var router = express.Router();
 
 const getNewToken = require('../lib/getNewToken');
+
+hbs.registerHelper({
+  date: (start) => {
+    return new Intl.DateTimeFormat('en-US').format(new Date(start))
+  },
+  seats_available: (seats, seats_taken) => {
+    return seats - seats_taken
+  },
+  time: (start) => {
+    return new Intl.DateTimeFormat('en-US', {hour: 'numeric' }).format(new Date(start))
+  },
+});
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
