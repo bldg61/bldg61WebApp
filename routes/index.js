@@ -19,7 +19,7 @@ router.get('/', async function(req, res, next) {
     const events = response.data.events
 
     res.render('index', {
-      title: 'Express',
+      title: 'BLDG 61 Calendar',
       events
     });
   })
