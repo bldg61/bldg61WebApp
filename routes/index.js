@@ -4,6 +4,7 @@ var hbs = require('hbs');
 var router = express.Router();
 
 const getNewToken = require('../lib/getNewToken');
+const orderEventsByDay = require('../lib/orderEventsByDay');
 
 hbs.registerHelper({
   date: (start) => {
@@ -33,19 +34,18 @@ router.get('/', async function(req, res, next) {
   axios.get(url, config)
   .then(function (response) {
     const events = response.data.events
+    const days = orderEventsByDay(events)
 
     res.render('index', {
       title: 'BLDG 61 Calendar',
-      events
+      days
     });
   })
   .catch(function (error) {
     const connectionError = !error.response
-    const tokenError = error.response.data.error_description === 'The access token provided has expired' ||
-    error.response.data.error_description === 'The access token provided is invalid'
 
     if (connectionError) {
-      res.render('error', {
+      return res.render('error', {
         error : {
           status: error.errno,
           stack: 'Oh Noes! Something just did a sads.'
@@ -53,6 +53,11 @@ router.get('/', async function(req, res, next) {
         message: error.code,
       });
     }
+
+    const errorDescription = error.response.data.error_description
+    const tokenError =
+      errorDescription === 'The access token provided has expired' ||
+      errorDescription === 'The access token provided is invalid'
 
     if (tokenError) {
       return getNewToken(res)

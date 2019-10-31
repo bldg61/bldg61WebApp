@@ -1,13 +1,20 @@
 <h1>{{title}}</h1>
 
 <div class="row">
-  {{#each events}}
-    <div class="col s12">
-      <div class="card-panel" style="background-color: {{color}}">
-        <a href={{url.public}} style="color:black">
-          <span>{{title}}: {{date start}} {{time start}} | {{seats_available seats seats_taken registration}}</span>
-        </a>
+  {{#each days}}
+    <h3>{{@key}}</h3>
+    {{#each this}}
+      <div class="col s12">
+        <div class="card-panel" style="background-color: {{color}}">
+          <a href={{url.public}} style="color:black">
+            <span>{{title}}: {{time start}} | {{seats_available seats seats_taken registration}}</span>
+          </a>
+        </div>
       </div>
-    </div>
+    {{/each}}
   {{/each}}
 </div>
+
+{{#each myObject}}
+    Key: {{@key}} Value = {{this}}
+{{/each}}
