@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
       days,
     });
   }).catch(error => {
-    handleLibCalError(res, next, error)
+    handleLibCalError(res, next, error);
   });
 });
 
