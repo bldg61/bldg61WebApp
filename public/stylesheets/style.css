@@ -4,4 +4,25 @@
     .calendarText {
       font-size: 2em; } }
 
+.sticky {
+  position: sticky;
+  top: 10px;
+  height: 80px;
+  padding: 16px; }
+
+.sticky_sentinel {
+  position: absolute;
+  left: 0;
+  /* needs dimensions */
+  right: 0;
+  visibility: hidden; }
+
+.sticky_sentinel--top {
+  height: 40px;
+  top: -24px; }
+
+.sticky_sentinel--bottom {
+  height: 96px;
+  bottom: 0; }
+
 /*# sourceMappingURL=style.css.map */
