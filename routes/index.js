@@ -5,6 +5,7 @@ const hbs = require('hbs');
 const router = express.Router();
 
 const getNewToken = require('../lib/getNewToken');
+const handleLibCalError = require('../lib/handleLibCalError');
 const orderEventsByDay = require('../lib/orderEventsByDay');
 
 hbs.registerHelper({
@@ -19,7 +20,7 @@ hbs.registerHelper({
 });
 
 /* GET home page. */
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   if (!process.env.ACCESS_TOKEN) { return getNewToken(res); }
 
   const url = process.env.EVENTS_URL;
@@ -38,34 +39,7 @@ router.get('/', async (req, res) => {
       days,
     });
   }).catch(error => {
-    const connectionError = !error.response;
-
-    if (connectionError) {
-      return res.render('error', {
-        error: {
-          status: error.errno,
-          stack: 'Oh Noes! Something just did a sads.',
-        },
-        message: error.code,
-      });
-    }
-
-    const errorDescription = error.response.data.error_description;
-    const expiredToken = errorDescription === 'The access token provided has expired';
-    const invalidToken = errorDescription === 'The access token provided is invalid';
-    const tokenError = expiredToken || invalidToken;
-
-    if (tokenError) {
-      return getNewToken(res);
-    }
-
-    return res.render('error', {
-      error: {
-        status: error.response.status,
-        stack: 'Oh Noes! Something about the LibCal API just did a sads.',
-      },
-      message: error.response.data.error_description,
-    });
+    handleLibCalError(res, next, error)
   });
 });
 
