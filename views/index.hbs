@@ -1,6 +1,13 @@
 {{#each days}}
 <div class="row">
-  <h3 class="card center-align sticky">{{@key}}</h3>
+  <h3 class="card center-align sticky">
+    <span class="hide-on-mobile">
+      {{dateLong @key}}
+    </span>
+    <span class="show-on-mobile">
+      {{dateShort @key}}
+    </span>
+  </h3>
   {{#each this}}
   <div class="col s12">
     <div class="card-panel" style="background-color: {{color}}">

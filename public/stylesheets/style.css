@@ -1,3 +1,13 @@
+.hide-on-mobile {
+  display: none; }
+  @media (min-width: 600px) {
+    .hide-on-mobile {
+      display: unset; } }
+
+@media (min-width: 600px) {
+  .show-on-mobile {
+    display: none; } }
+
 .calendarText {
   font-size: 2em; }
   @media (min-width: 600px) {
@@ -13,7 +23,6 @@
 .sticky_sentinel {
   position: absolute;
   left: 0;
-  /* needs dimensions */
   right: 0;
   visibility: hidden; }
 
