@@ -9,7 +9,16 @@ const handleLibCalError = require('../lib/handleLibCalError');
 const orderEventsByDay = require('../lib/orderEventsByDay');
 
 hbs.registerHelper({
-  date: start => new Intl.DateTimeFormat('en-US').format(new Date(start)),
+  dateLong: start => {
+    const day = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format(new Date(start))
+    const date = new Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(start))
+    return `${day}, ${date}`
+  },
+  dateShort: start => {
+    const day = new Intl.DateTimeFormat('en-US', {weekday: 'short'}).format(new Date(start))
+    const date = new Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(new Date(start))
+    return `${day}, ${date}`
+  },
   seats_available: (seats, seats_taken, registration) => {
     if (registration) {
       return `${seats - seats_taken}  seats available`;

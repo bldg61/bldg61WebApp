@@ -1,20 +1,21 @@
-<h1 class="center-align">{{title}}</h1>
-
+{{#each days}}
 <div class="row">
-  {{#each days}}
-    <h3 class="center-align">{{@key}}</h3>
-    {{#each this}}
-      <div class="col s12">
-        <div class="card-panel" style="background-color: {{color}}">
-          <a href={{url.public}} style="color:black">
-            <span class="calendarText">{{title}}: {{time start}} | {{seats_available seats seats_taken registration}}</span>
-          </a>
-        </div>
-      </div>
-    {{/each}}
+  <h3 class="card center-align sticky">
+    <span class="hide-on-mobile">
+      {{dateLong @key}}
+    </span>
+    <span class="show-on-mobile">
+      {{dateShort @key}}
+    </span>
+  </h3>
+  {{#each this}}
+  <div class="col s12">
+    <div class="card-panel" style="background-color: {{color}}">
+      <a href={{url.public}} style="color:black">
+        <span class="calendarText">{{title}}: {{time start}} | {{seats_available seats seats_taken registration}}</span>
+      </a>
+    </div>
+  </div>
   {{/each}}
 </div>
-
-{{#each myObject}}
-    Key: {{@key}} Value = {{this}}
 {{/each}}

@@ -1,7 +1,37 @@
+.hide-on-mobile {
+  display: none; }
+  @media (min-width: 600px) {
+    .hide-on-mobile {
+      display: unset; } }
+
+@media (min-width: 600px) {
+  .show-on-mobile {
+    display: none; } }
+
 .calendarText {
   font-size: 2em; }
   @media (min-width: 600px) {
     .calendarText {
       font-size: 2em; } }
+
+.sticky {
+  position: sticky;
+  top: 10px;
+  height: 80px;
+  padding: 16px; }
+
+.sticky_sentinel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  visibility: hidden; }
+
+.sticky_sentinel--top {
+  height: 40px;
+  top: -24px; }
+
+.sticky_sentinel--bottom {
+  height: 96px;
+  bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */

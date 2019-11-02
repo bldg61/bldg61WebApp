@@ -1,4 +1,35 @@
+$default-padding: 16px
+$header-height: 80px
+
+.hide-on-mobile
+  display: none
+  @media (min-width: 600px)
+    display: unset
+.show-on-mobile
+  @media (min-width: 600px)
+    display: none
+
 .calendarText
   font-size: 2em
   @media (min-width: 600px)
     font-size: 2em
+
+.sticky
+  position: sticky
+  top: 10px
+  height: $header-height
+  padding: $default-padding
+
+.sticky_sentinel
+  position: absolute
+  left: 0
+  right: 0
+  visibility: hidden
+
+.sticky_sentinel--top
+  height: 40px
+  top: -24px
+
+.sticky_sentinel--bottom
+  height: $header-height + $default-padding
+  bottom: 0
