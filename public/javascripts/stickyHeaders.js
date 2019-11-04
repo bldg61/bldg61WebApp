@@ -1,3 +1,5 @@
+// This is from the article here: https://developers.google.com/web/updates/2017/09/sticky-headers
+
 function observeStickyHeaderChanges(container) {
   observeHeaders(container);
   observeFooters(container);
@@ -18,12 +20,12 @@ function observeHeaders(container) {
       }
 
       // Stopped sticking.
-      if (targetInfo.bottom >= rootBoundsInfo.top &&
-          targetInfo.bottom < rootBoundsInfo.bottom) {
-       fireEvent(false, stickyTarget);
+      if (targetInfo.bottom >= rootBoundsInfo.top
+          && targetInfo.bottom < rootBoundsInfo.bottom) {
+        fireEvent(false, stickyTarget);
       }
     }
-  }, {threshold: [0], root: container});
+  }, { threshold: [0], root: container });
 
   // Add the top sentinels to each section and attach an observer.
   const sentinels = addSentinels(container, 'sticky_sentinel--top');
@@ -44,12 +46,12 @@ function observeFooters(container) {
       }
 
       // Stopped sticking.
-      if (targetInfo.top < rootBoundsInfo.top &&
-          targetInfo.bottom < rootBoundsInfo.bottom) {
+      if (targetInfo.top < rootBoundsInfo.top
+        && targetInfo.bottom < rootBoundsInfo.bottom) {
         fireEvent(false, stickyTarget);
       }
     }
-  }, {threshold: [1], root: container});
+  }, { threshold: [1], root: container });
 
   // Add the bottom sentinels to each section and attach an observer.
   const sentinels = addSentinels(container, 'sticky_sentinel--bottom');
@@ -65,6 +67,6 @@ function addSentinels(container, className) {
 }
 
 function fireEvent(stuck, target) {
-  const e = new CustomEvent('sticky-change', {detail: {stuck, target}});
+  const e = new CustomEvent('sticky-change', { detail: { stuck, target } });
   document.dispatchEvent(e);
 }

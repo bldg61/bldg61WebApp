@@ -10,14 +10,14 @@ const orderEventsByDay = require('../lib/orderEventsByDay');
 
 hbs.registerHelper({
   dateLong: start => {
-    const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(start))
-    const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start))
-    return `${day}, ${date}`
+    const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(start));
+    const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start));
+    return `${day}, ${date}`;
   },
   dateShort: start => {
-    const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(new Date(start))
-    const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start))
-    return `${day}, ${date}`
+    const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(new Date(start));
+    const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start));
+    return `${day}, ${date}`;
   },
   seats_available: (seats, seats_taken, registration) => {
     if (registration) {
@@ -25,7 +25,13 @@ hbs.registerHelper({
     }
     return 'open availability';
   },
-  time: start => new Intl.DateTimeFormat('en-US', { hour: 'numeric' , timeZone: 'America/Denver' }).format(new Date(start)),
+  time: start => new Intl.DateTimeFormat(
+    'en-US',
+    {
+      hour: 'numeric',
+      timeZone: 'America/Denver',
+    },
+  ).format(new Date(start)),
 });
 
 /* GET home page. */
