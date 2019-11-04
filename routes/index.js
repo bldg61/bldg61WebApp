@@ -25,7 +25,7 @@ hbs.registerHelper({
     }
     return 'open availability';
   },
-  time: start => new Intl.DateTimeFormat('en-US', { hour: 'numeric' }).format(new Date(start)),
+  time: start => new Intl.DateTimeFormat('en-US', { hour: 'numeric' , timeZone: 'America/Denver' }).format(new Date(start)),
 });
 
 /* GET home page. */
