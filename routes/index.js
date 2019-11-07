@@ -14,14 +14,12 @@ hbs.registerHelper({
       'en-US',
       {
         weekday: 'long',
-        timeZone: 'America/Denver',
       }
     ).format(new Date(start))
     const date = new Intl.DateTimeFormat(
       'en-US',
       {
         dateStyle: 'medium',
-        timeZone: 'America/Denver',
       }
     ).format(new Date(start))
     return `${day}, ${date}`
@@ -31,14 +29,12 @@ hbs.registerHelper({
       'en-US',
       {
         weekday: 'short',
-        timeZone: 'America/Denver',
       }
     ).format(new Date(start))
     const date = new Intl.DateTimeFormat(
       'en-US',
       {
         dateStyle: 'medium',
-        timeZone: 'America/Denver',
       }
     ).format(new Date(start))
     return `${day}, ${date}`
