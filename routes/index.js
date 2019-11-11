@@ -29,6 +29,7 @@ hbs.registerHelper({
     'en-US',
     {
       hour: 'numeric',
+      minute: 'numeric',
       timeZone: 'America/Denver',
     },
   ).format(new Date(start)),
