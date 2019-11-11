@@ -1,5 +1,4 @@
-async function signupCompiler(ev) {
-  console.log("event: ", ev);
+async function signupCompiler() {
 
   const sheets = window.myCSVs.map(myCSV => Papa.parse(myCSV).data)
 
@@ -27,37 +26,46 @@ async function signupCompiler(ev) {
 
     laserCutoffTime = thisTitle === 'Laser Cutting Guided Access' ? dateTime.split(' - ')[1].split(',')[0] : laserCutoffTime
     const studentsDetailed = sheet.slice(10, sheet.length)
-    const students = studentsDetailed.map(student => {
-      return [student[0], student[1]]
+    const students = studentsDetailed.filter(student => {
+      const studentRecord = student.length > 1
+      return studentRecord
+    }).map(student => {
+      return [`<tr><td>${student[0]}</td><td>${student[1]}</td><td></td></tr>`]
     })
+
     return [
-      [thisTitle],
-      [dateTime],
-      ['First Name', 'Last Name']
-    ].concat(
-      students
-    )
+      [`<h5>${thisTitle}</h5>`],
+      [`<h5>${dateTime}</h5>`],
+      ['<table class="striped">'],
+      ['<thead>'],
+      ['<tr>'],
+      ['<th>First Name</th><th>Last Name</th><th>arrived</th>'],
+      ['</tr>'],
+      ['</thead>'],
+      ['<tbody>'],
+      students.join(''),
+      ['</tbody>'],
+      ['</table>'],
+    ]
   })
 
   if (error) {
     return
   }
 
-
   const today = new Date(new Intl.DateTimeFormat('en-US').format(new Date))
   const warning = masterDate - today !==0 ? 'WARNING - These signup sheets are not for today.' : ''
   const laserMessage1 = laserCutoffTime ? `
-    <h4 class="${warningColor}">FOR EXTRA TIME</h4>
-    <h4 class="${warningColor}">PLEASE SEE STAFF</h4>
+    <h5 class="${warningColor}">FOR EXTRA TIME PLEASE SEE STAFF</h5>
   ` : ''
-  const laserMessage2 = laserCutoffTime ? `<h4 class="${warningColor}">LASERS OFF AT ${laserCutoffTime}</h4>` : ''
+  const laserMessage2 = laserCutoffTime ? `<h5 class="${warningColor}">LASERS OFF AT ${laserCutoffTime}</h5>` : ''
   const sessions = titles.length > 1 ?
-    signupSeshes.flat() :
-    signupSeshes.map( session => session.slice(1, session.length)).flat()
+    signupSeshes.flat().join('') :
+    signupSeshes.map( session => session.slice(1, session.length)).flat().join('')
 
   const newFileContent = `
   ${warning}
-  <h3>${titles.join(' AND ')}</h3>
+  <h4>${titles.join(' AND ')}</h4>
   ${laserMessage1}
   ${sessions}
   ${laserMessage2}
