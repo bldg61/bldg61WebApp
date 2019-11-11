@@ -25,7 +25,7 @@ hbs.registerHelper({
     } else if (event.title === 'Open Studio & Limited Shop Access') {
       return 'open availability';
     }
-    return;
+    return 'see event details';
   },
   time: start => new Intl.DateTimeFormat(
     'en-US',
