@@ -39,7 +39,7 @@ async function signupCompiler() {
       ['<table class="striped">'],
       ['<thead>'],
       ['<tr>'],
-      ['<th>First Name</th><th>Last Name</th><th>arrived</th>'],
+      ['<th>First Name</th><th>Last Name</th><th>Arrived</th>'],
       ['</tr>'],
       ['</thead>'],
       ['<tbody>'],
@@ -53,8 +53,6 @@ async function signupCompiler() {
     return
   }
 
-  const today = new Date(new Intl.DateTimeFormat('en-US').format(new Date))
-  const warning = masterDate - today !==0 ? 'WARNING - These signup sheets are not for today.' : ''
   const laserMessage1 = laserCutoffTime ? `
     <h5 class="${warningColor}">FOR EXTRA TIME PLEASE SEE STAFF</h5>
   ` : ''
@@ -64,12 +62,18 @@ async function signupCompiler() {
     signupSeshes.map( session => session.slice(1, session.length)).flat().join('')
 
   const newFileContent = `
-  ${warning}
   <h4>${titles.join(' AND ')}</h4>
   ${laserMessage1}
   ${sessions}
   ${laserMessage2}
   `
+  const today = new Date(new Intl.DateTimeFormat('en-US').format(new Date))
+  if (masterDate - today !==0) {
+    M.toast({
+      classes: warningColor,
+      html: 'WARNING - These signup sheets are not for today.',
+    })
+  }
 
   document.getElementById('signupCompiler').innerHTML = newFileContent
 }
