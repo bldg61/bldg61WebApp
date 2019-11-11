@@ -22,7 +22,7 @@ async function dropHandler(ev) {
         numberFilesAdded.innerHTML = window.myCSVs.length === 1 ? `${window.myCSVs.length} file` : `${window.myCSVs.length} files`
 
         const mungeButton = document.getElementById('mungeButton')
-        mungeButton.className = mungeButton.className.split("disabled").join('')
+        mungeButton.className = mungeButton.className.split('disabled').join('')
       }
     }
   } else {
