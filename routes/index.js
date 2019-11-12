@@ -19,16 +19,19 @@ hbs.registerHelper({
     const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start));
     return `${day}, ${date}`;
   },
-  seats_available: (seats, seats_taken, registration) => {
-    if (registration) {
-      return `${seats - seats_taken}  seats available`;
+  seats_available: (event) => {
+    if (event.registration) {
+      return `${event.seats - event.seats_taken}  seats available`;
+    } else if (event.title === 'Open Studio & Limited Shop Access') {
+      return 'open availability';
     }
-    return 'open availability';
+    return 'see event details';
   },
   time: start => new Intl.DateTimeFormat(
     'en-US',
     {
       hour: 'numeric',
+      minute: 'numeric',
       timeZone: 'America/Denver',
     },
   ).format(new Date(start)),
