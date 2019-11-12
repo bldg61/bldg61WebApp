@@ -1,5 +1,13 @@
 # README
 
+Mrrrrbe todos:
+
+- [ ] If one of these sheets has a different day, mark that sheet filename with a sads after compile-click
+- [ ] If a sheet has a different day, mark that sheet with sads upon drag-drop
+- [ ] Some preparsing - filename is accompanied with date and event title on drag-drop
+- [ ] you can remove a file before compiling (x)
+- [ ] can you center a toast????
+
 ### Live site: http://bldg61cal.herokuapp.com/
 
 ### Local dev setup:
