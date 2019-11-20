@@ -2,6 +2,8 @@
 
 Mrrrrbe todos:
 
+- [ ] Lists are ordered by time, then title (shop + cnc)
+- [ ] User can drag csvs into any space in page
 - [ ] If one of these sheets has a different day, mark that sheet filename with a sads after compile-click
 - [ ] If a sheet has a different day, mark that sheet with sads upon drag-drop
 - [ ] Some preparsing - filename is accompanied with date and event title on drag-drop
