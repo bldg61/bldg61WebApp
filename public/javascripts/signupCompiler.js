@@ -36,7 +36,7 @@ async function signupCompiler() {
     return [
       [`<h5>${thisTitle}</h5>`],
       [`<h5>${dateTime}</h5>`],
-      ['<table class="striped">'],
+      ['<table class="striped font-size1pt5em">'],
       ['<thead>'],
       ['<tr>'],
       ['<th>First Name</th><th>Last Name</th><th>Arrived</th>'],
