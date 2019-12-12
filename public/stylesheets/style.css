@@ -1,6 +1,9 @@
 #drop_zone {
   border: 5px dotted #a7ffeb; }
 
+.font-size1pt5em {
+  font-size: 1.5em; }
+
 .calendarText {
   font-size: 1.5em; }
   @media (min-width: 600px) {
