@@ -19,7 +19,7 @@ hbs.registerHelper({
     const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(start));
     return `${day}, ${date}`;
   },
-  seats_available: (event) => {
+  seats_available: event => {
     if (event.registration) {
       return `${event.seats - event.seats_taken}  seats available`;
     } else if (event.title === 'Open Studio & Limited Shop Access') {
