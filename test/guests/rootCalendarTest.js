@@ -1,6 +1,8 @@
 const request = require('supertest');
 const { expect } = require('chai');
 
+require('../helpers/testSetup');
+
 const app = require('../../app.js');
 
 describe('Root path', async () => {
@@ -15,5 +17,5 @@ describe('Root path', async () => {
     expect(res.text).to.include('Laser Cutting Guided Access');
     expect(res.text).to.include('CNC Guided Access');
     expect(res.text).to.include('Open Studio');
-  });
+  }).timeout(5000);;
 });

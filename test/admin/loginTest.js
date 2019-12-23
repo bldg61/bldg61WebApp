@@ -2,22 +2,32 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const request = require('supertest');
 const { expect } = require('chai');
 
+require('../helpers/testSetup');
+
 const app = require('../../app.js');
+const User = require('../../models/user');
 
 describe('Admin path', async () => {
   it('allows users to login', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-      await driver.get('http://localhost:3000/admin');
-      await driver.findElement(By.id('email')).sendKeys('user@example.com');
+      const user = await User.create({
+        firstName: 'Elowyn',
+        lastName: 'Platzer Bartel',
+        email: 'elowyn@example.com',
+        password: 'password',
+      });
+
+      await driver.get('http://localhost:1500/admin');
+      await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
-      await driver.wait(until.elementTextContains(driver.findElement(By.className('adminGreeting')), 'RUN ITS AN ADMIN!!!! eeeeeeeeee'), 3000);
-      await driver.findElement(By.className('adminGreeting')).getText().then((actual) => {
-        expect(actual).to.equal('RUN ITS AN ADMIN!!!! eeeeeeeeee')
+      await driver.wait(until.elementTextContains(driver.findElement(By.id('adminGreeting')), 'Welcome'), 6000);
+      await driver.findElement(By.id('adminGreeting')).getText().then((actual) => {
+        expect(actual).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`)
       })
     } finally {
       await driver.quit();
     }
-  }).timeout(15000);
+  }).timeout(25000);
 });

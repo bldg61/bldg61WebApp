@@ -2,6 +2,21 @@ const bcrypt = require('bcryptjs');
 
 const { query } = require('../db/index');
 
+exports.authenticate = async credentials => {
+  const user = (await query('SELECT * FROM "users" WHERE "email" = $1', [
+    credentials.email,
+  ])).rows[0];
+
+  const valid = user
+    ? await bcrypt.compare(credentials.password, user.passwordDigest)
+    : false;
+
+  if (valid) {
+    return user
+  }
+  return { errors: ['Email or Password is incorrect'] };
+};
+
 exports.create = async properties => {
   const errors = await validate(properties);
   if (errors) {
