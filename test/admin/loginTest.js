@@ -6,27 +6,18 @@ const app = require('../../app.js');
 
 describe('Admin path', async () => {
   it('allows users to login', async () => {
-    const res = await request(app)
-      .get('/admin')
-      .redirects()
-      .expect(200);
-
-    expect(res.err).to.be.undefined; // eslint-disable-line no-unused-expressions
-    expect(res.text).to.include('Login');
-    expect(res.text).to.include('Email');
-    expect(res.text).to.include('Password');
-    expect(res.text).to.include('Login');
-  }).timeout(15000);;
-
-  it('...Selenium example...', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
     try {
-      await driver.get('http://www.google.com/ncr');
-      await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
-      await driver.wait(until.titleIs('webdriver - Google Search'), 3000);
+      await driver.get('http://localhost:3000/admin');
+      await driver.findElement(By.id('email')).sendKeys('user@example.com');
+      await driver.findElement(By.id('password')).sendKeys('password');
+      await driver.findElement(By.id('login')).click();
+      await driver.wait(until.elementTextContains(driver.findElement(By.className('adminGreeting')), 'RUN ITS AN ADMIN!!!! eeeeeeeeee'), 3000);
+      await driver.findElement(By.className('adminGreeting')).getText().then((actual) => {
+        expect(actual).to.equal('RUN ITS AN ADMIN!!!! eeeeeeeeee')
+      })
     } finally {
       await driver.quit();
-      expect(true).to.equal(true)
     }
   }).timeout(15000);
 });
