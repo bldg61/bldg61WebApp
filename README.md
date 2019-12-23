@@ -14,8 +14,9 @@ Mrrrrbe todos:
 
 ### Local dev requirements:
 
-1. node and yarn (or npm)
-1. psql
+1. [Node.js](https://nodejs.org/en/) - install perhaps via NVM or similar
+1. [Yarn](https://yarnpkg.com/en/docs/install) - can install with homebrew or similar(or use npm, ships with Node.js)
+1. [PostgreSQL](https://www.postgresql.org/download/) - can install with homebrew or similar
 
 ### Local dev setup:
 
@@ -23,8 +24,25 @@ Mrrrrbe todos:
 1. cp .env.example .env and update with libCal values
     * client id and secret: log into libcal as admin, go to admin -> api -> api authentication and create an app
     * events url: admin -> api -> endpoints (current v1.1) -> events and copy url with the calendar id, replace with your calendar's id
-1. createdb bldg61_development && createdb bldg61_test
-1. yarn start, or install nodemon locally and nodemon start (watches file changes and restarts server)
+1. `createdb bldg61_development && createdb bldg61_test`
+1. `yarn db:migrate && yarn db:migrate:test`
+    * if you want to rollback or forward to a specific version, add an ENV with that specific timestamp, for example:
+        ```
+        MIGRATE_TO=20191223035122 yarn db:migrate
+        ```
+1. `yarn start`, or install nodemon locally and :sparkles: `nodemon start` :sparkles: (watches file changes and restarts server)
+1. To add admin users:
+    ```
+    -> DATABASE_URL=postgres://localhost/bldg61_development node
+    > const User = require('./models/user');
+    > User.create({
+      firstName: 'Luke',
+      lastName: 'Bartel',
+      email: 'luke@example.com',
+      password: 'password',
+      })
+    ```
+    This will return a pending promise, but a user will have been created in the database.
 
 ### Checking out the running server on other devices (must be on same wifi)
 
