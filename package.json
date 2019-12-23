@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "coverage": "nyc mocha --recursive",
+    "coverage": "nyc mocha --recursive --exit",
     "db:createMigration": "node ./lib/createMigration.js",
     "db:migrate": "node postgrator.js",
     "db:migrate:test": "NODE_ENV=test node postgrator.js",
