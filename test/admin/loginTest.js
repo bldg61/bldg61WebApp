@@ -1,4 +1,4 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 const request = require('supertest');
 const { expect } = require('chai');
 
@@ -22,24 +22,24 @@ describe('Admin path', async () => {
       await driver.findElement(By.id('email')).sendKeys('wrongEmail@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('loginFormError'))), 6000);
-      await driver.findElement(By.id('loginFormError')).getText().then((actual) => {
-        expect(actual).to.equal('Email or Password is incorrect')
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('loginError'))), 6000);
+      await driver.findElement(By.id('loginError')).getText().then((text) => {
+        expect(text).to.equal('Email or Password is incorrect')
       })
 
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('WRONGpassword');
       await driver.findElement(By.id('login')).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('loginFormError'))), 6000);
-      await driver.findElement(By.id('loginFormError')).getText().then((actual) => {
-        expect(actual).to.equal('Email or Password is incorrect')
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('loginError'))), 6000);
+      await driver.findElement(By.id('loginError')).getText().then((text) => {
+        expect(text).to.equal('Email or Password is incorrect')
       })
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('adminGreeting'))), 6000);
-      await driver.findElement(By.id('adminGreeting')).getText().then((actual) => {
-        expect(actual).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`)
+      await driver.findElement(By.id('adminGreeting')).getText().then((text) => {
+        expect(text).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`)
       })
     } finally {
       await driver.quit();
