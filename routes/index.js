@@ -41,7 +41,7 @@ hbs.registerHelper({
 router.get('/', async (req, res, next) => {
   if (!process.env.ACCESS_TOKEN) { return getNewToken(req, res, next); }
 
-  const url = process.env.EVENTS_URL;
+  const url = process.env.LIBCAL_EVENTS_URL;
   const config = {
     headers: {
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
