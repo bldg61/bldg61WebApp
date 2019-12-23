@@ -8,8 +8,10 @@ exports.create = async (req, res) => {
     })
   } else {
     req.session.userId = user.id;
-    res.render('admin', {
-      user
-    });
+    res.redirect('/admin');
   }
 };
+
+exports.new = (req, res) => {
+  res.render('login');
+}

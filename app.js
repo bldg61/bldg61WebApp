@@ -1,10 +1,10 @@
+const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
+const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
+const session = require('express-session');
 
 const adminRouter = require('./routes/admin');
 const indexRouter = require('./routes/index');
@@ -14,7 +14,6 @@ const verifyLoggedInUser = require('./lib/verifyLoggedInUser');
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 

@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  res.render('admin');
-});
+const adminController = require('../controllers/admin');
+
+router.get('/', adminController.index);
 
 module.exports = router;
