@@ -17,5 +17,5 @@ describe('Root path', async () => {
     expect(res.text).to.include('Laser Cutting Guided Access');
     expect(res.text).to.include('CNC Guided Access');
     expect(res.text).to.include('Open Studio');
-  }).timeout(5000);;
+  }).timeout(5000);
 });

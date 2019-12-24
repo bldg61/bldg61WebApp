@@ -49,3 +49,7 @@ Mrrrrbe todos:
 1. Get the running server computer's LOCAL ip address
     * Mac - Listed in System Preferences -> Network
 1. Go to <local ip address>:<port number> on the other device(s)
+
+### Docs for dependencies:
+
+* [Selenium WebDriver](https://selenium.dev/selenium/docs/api/javascript/index.html)

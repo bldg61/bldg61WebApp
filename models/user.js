@@ -12,7 +12,7 @@ exports.authenticate = async credentials => {
     : false;
 
   if (valid) {
-    return user
+    return user;
   }
   return { errors: ['Email or Password is incorrect'] };
 };

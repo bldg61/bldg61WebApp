@@ -16,10 +16,10 @@ describe('User', async () => {
     expect(user.firstName).to.equal('Elowyn');
     expect(user.lastName).to.equal('Platzer Bartel');
     expect(user.email).to.equal('elowyn@example.com');
-    expect(user.id).to.not.be.undefined;
-    expect(user.passwordDigest).to.not.be.undefined;
-    expect(user.createdAt).to.not.be.undefined;
-    expect(user.updatedAt).to.not.be.undefined;
+    expect(user.id).to.not.be.undefined; // eslint-disable-line no-unused-expressions
+    expect(user.passwordDigest).to.not.be.undefined; // eslint-disable-line no-unused-expressions
+    expect(user.createdAt).to.not.be.undefined; // eslint-disable-line no-unused-expressions
+    expect(user.updatedAt).to.not.be.undefined; // eslint-disable-line no-unused-expressions
 
     const duplicateUser = await User.create({
       firstName: 'Elowyn',
