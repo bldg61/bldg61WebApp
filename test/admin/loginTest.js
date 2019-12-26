@@ -32,9 +32,11 @@ describe('Admin path', async () => {
       await driver.findElement(By.id('loginError')).getText().then(text => {
         expect(text).to.equal('Email or Password is incorrect');
       });
+
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
+      await driver.wait(until.urlContains('/admin'), 6000);
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('adminGreeting'))), 6000);
       await driver.findElement(By.id('adminGreeting')).getText().then(text => {
         expect(text).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`);
@@ -42,5 +44,5 @@ describe('Admin path', async () => {
     } finally {
       await driver.quit();
     }
-  }).timeout(25000);
+  }).timeout(50000);
 });
