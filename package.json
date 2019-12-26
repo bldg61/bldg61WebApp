@@ -3,23 +3,40 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "coverage": "nyc mocha --recursive --exit",
+    "db:createMigration": "node ./lib/createMigration.js",
+    "db:migrate": "node postgrator.js",
+    "db:migrate:test": "NODE_ENV=test node postgrator.js",
     "lint": "eslint .",
-    "start": "node ./bin/www"
+    "report": "nyc report --reporter=lcov",
+    "start": "node ./bin/www",
+    "test": "mocha --recursive --exit"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^6.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "express-session": "^1.17.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-sass-middleware": "0.11.0"
+    "node-sass-middleware": "0.11.0",
+    "pg": "^7.15.1",
+    "postgrator": "^3.11.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chromedriver": "^79.0.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "selenium-webdriver": "^4.0.0-alpha.5",
+    "supertest": "^4.0.2"
   }
 }
