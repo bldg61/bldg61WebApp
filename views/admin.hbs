@@ -17,7 +17,11 @@
             <tr>
               <td>{{name}}</td>
               <td>{{totalForCheckout}}</td>
-              <td>{{categories}}</td>
+              <td>
+                {{#each categories}}
+                  {{name}}
+                {{/each}}
+              </td>
             </tr>
           {{/each}}
         </tbody>

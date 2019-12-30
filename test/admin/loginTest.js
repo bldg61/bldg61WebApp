@@ -19,6 +19,7 @@ describe('Admin path', async () => {
       });
 
       await driver.get('http://localhost:1500/admin');
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 6000);
       await driver.findElement(By.id('email')).sendKeys('wrongEmail@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
@@ -27,6 +28,7 @@ describe('Admin path', async () => {
         expect(text).to.equal('Email or Password is incorrect');
       });
 
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 6000);
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('WRONGpassword');
       await driver.findElement(By.id('login')).click();
@@ -35,6 +37,7 @@ describe('Admin path', async () => {
         expect(text).to.equal('Email or Password is incorrect');
       });
 
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 6000);
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
@@ -75,6 +78,7 @@ describe('Admin path', async () => {
       });
 
       await driver.get('http://localhost:1500/admin');
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 6000);
       await driver.findElement(By.id('email')).sendKeys('elowyn@example.com');
       await driver.findElement(By.id('password')).sendKeys('password');
       await driver.findElement(By.id('login')).click();
@@ -86,6 +90,9 @@ describe('Admin path', async () => {
       await driver.findElement(By.id('equipmentAvailable')).getText().then(text => {
         expect(text).to.contain(equipment.name);
         expect(text).to.contain(equipment.totalForCheckout);
+        expect(text).to.contain(category1.name);
+        expect(text).to.contain(category2.name);
+        expect(text).to.contain(category3.name);
       });
     } finally {
       await driver.quit();

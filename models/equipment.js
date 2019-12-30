@@ -4,7 +4,21 @@ exports.all = async () => {
   const equipments = (await query(
     'SELECT * FROM "equipments"'
   )).rows;
-  return equipments
+  const equipmentsWithCategories = equipments.map(async equipment => {
+    const categories = (await query(
+      `SELECT
+        categories.id,
+        categories.name
+      FROM categorizations, categories
+      WHERE categorizations."equipmentId" = ($1)
+      AND categorizations."categoryId" = categories.id;`,
+      [
+        equipment.id
+      ]
+    )).rows
+    return { ...equipment, categories}
+  })
+  return Promise.all(equipmentsWithCategories)
 }
 
 exports.create = async properties => {
@@ -20,10 +34,33 @@ exports.create = async properties => {
     ) values ($1, $2) returning *`,
     [
       properties.name,
-      properties.totalForCheckout
+      properties.totalForCheckout,
     ],
   )).rows[0];
-  return createdEquipment;
+
+  const promisedCategories = properties.categoryIds.map(async categoryId => {
+    const categorization = (await query(
+      `INSERT INTO "categorizations"(
+        "categoryId",
+        "equipmentId"
+      ) values ($1, $2) returning *`,
+      [
+        categoryId,
+        createdEquipment.id,
+      ],
+    )).rows[0];
+    const category = (await query(
+      `SELECT * FROM "categories" WHERE "id" = ($1) LIMIT 1`,
+      [
+        categoryId,
+      ],
+    )).rows[0];
+    return category;
+  })
+
+  return Promise.all(promisedCategories).then(categories => {
+    return { ...createdEquipment, categories };
+  })
 };
 
 
