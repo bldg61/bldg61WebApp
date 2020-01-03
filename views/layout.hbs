@@ -14,8 +14,12 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script type="text/javascript">
-      const tabs = document.querySelector('.tabs');
-      M.Tabs.init(tabs, {});
+      document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelector('.tabs');
+        M.Tabs.init(tabs, {});
+        const modals = document.querySelectorAll('.modal');
+        M.Modal.init(modals, {});
+      });
     </script>
   </body>
 </html>

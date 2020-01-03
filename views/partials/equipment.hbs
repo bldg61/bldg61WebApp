@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-content">
     <span class="card-title">Equipment
-      <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right activator"><i class="material-icons">add</i></a>
+      <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right modal-trigger" href="#newEquipmentForm"><i class="material-icons">add</i></a>
     </span>
 
     {{#if equipments.length}}
@@ -35,11 +35,9 @@
     {{/if}}
   </div>
 
-  <div class="card-reveal">
-    <span class="card-title activator">Equipment
-      <a id="close" class="btn-floating btn-large waves-effect waves-light pink right"><i class="material-icons">close</i></a>
-    </span>
-    <div id="newEquipmentForm" class="row">
+  <div id="newEquipmentForm" class="modal">
+    <div class="modal-content">
+      <h4>New Equipment</h4>
       <form class="col s12" action="/equipments" method="post">
         {{# if equipment.errors}}
         <div class="row">
@@ -74,9 +72,11 @@
             {{/each}}
           </div>
         </div>
-        <button id="createEquipment" class="btn waves-effect waves-light" type="submit" name="action">Add this Equipment
-          <i class="material-icons right"></i>
-        </button>
+        <div class="modal-footer">
+          <button id="createEquipment" class="modal-close btn waves-effect waves-light" type="submit" name="action">Add
+            <i class="material-icons right"></i>
+          </button>
+        </div>
       </form>
     </div>
   </div>
