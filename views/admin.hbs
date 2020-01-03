@@ -1,8 +1,9 @@
 <h1 id="adminGreeting">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}!</h1>
 <div class="card">
   <div class="card-content">
-    <span class="card-title">Equipment</span>
-    <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right activator"><i class="material-icons">add</i></a>
+    <span class="card-title">Equipment
+      <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right activator"><i class="material-icons">add</i></a>
+    </span>
 
     {{#if equipments.length}}
       <div class="row">
