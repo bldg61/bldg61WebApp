@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const express = require('express');
+const hbs = require('hbs');
 const logger = require('morgan');
 const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
@@ -18,6 +19,7 @@ const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
