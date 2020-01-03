@@ -38,7 +38,12 @@ exports.create = async properties => {
     ],
   )).rows[0];
 
-  const promisedCategories = properties.categoryIds.map(async categoryId => {
+  const categoryIds =
+    properties.categoryIds === undefined ? []
+    : typeof properties.categoryIds === 'string' ? [ properties.categoryIds ]
+    : [ ...properties.categoryIds ];
+
+  const promisedCategories = categoryIds.map(async categoryId => {
     const categorization = (await query(
       `INSERT INTO "categorizations"(
         "categoryId",

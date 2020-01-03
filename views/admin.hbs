@@ -66,13 +66,13 @@
               <p>
                 <label for="categoryIds-{{id}}">
                   <input type="checkbox" id="categoryIds-{{id}}" name="categoryIds" value="{{id}}"/>
-                  <span>{{name}}</span>
+                  <span id="categoryIds-checkbox-{{id}}">{{name}}</span>
                 </label>
               </p>
             {{/each}}
           </div>
         </div>
-        <button id="login" class="btn waves-effect waves-light" type="submit" name="action">Add this Equipment
+        <button id="createEquipment" class="btn waves-effect waves-light" type="submit" name="action">Add this Equipment
           <i class="material-icons right"></i>
         </button>
       </form>
