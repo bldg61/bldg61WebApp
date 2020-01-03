@@ -61,15 +61,9 @@ describe('Admin path', async () => {
         password: 'password',
       });
 
-      const category1 = await Category.create({
-        name: 'sewing',
-      });
-      const category2 = await Category.create({
-        name: 'quilting',
-      });
-      const category3 = await Category.create({
-        name: 'fiberArts',
-      });
+      const category1 = await Category.create({ name: 'sewing' });
+      const category2 = await Category.create({ name: 'quilting' });
+      const category3 = await Category.create({ name: 'fiberArts' });
 
       const equipment = await Equipment.create({
         name: 'Sewing Machine',
@@ -94,6 +88,9 @@ describe('Admin path', async () => {
         expect(text).to.contain(category2.name);
         expect(text).to.contain(category3.name);
       });
+      await driver.findElement(By.id('addEquipment')).click();
+      await driver.findElement(By.id('name')).sendKeys('Soldering Iron');
+      await driver.findElement(By.id('totalForCheckout')).sendKeys('1');
     } finally {
       await driver.quit();
     }

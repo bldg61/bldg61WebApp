@@ -1,33 +1,83 @@
 <h1 id="adminGreeting">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}!</h1>
-{{#if equipments.length}}
-  <h2>Equipment</h2>
-  <div class="row">
-    <div class="col s12">
-      <table id=equipmentAvailable>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Total Available For Checkout</th>
-            <th>Categories</th>
-          </tr>
-        </thead>
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Equipment</span>
+    <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right activator"><i class="material-icons">add</i></a>
 
-        <tbody>
-          {{#each equipments}}
-            <tr>
-              <td>{{name}}</td>
-              <td>{{totalForCheckout}}</td>
-              <td>
-                {{#each categories}}
+    {{#if equipments.length}}
+      <div class="row">
+        <div class="col s12">
+          <table id=equipmentAvailable>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Total Available For Checkout</th>
+                <th>Categories</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#each equipments}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{totalForCheckout}}</td>
+                <td>
+                  {{#each categories}}
                   {{name}}
-                {{/each}}
-              </td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
+                  {{/each}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="card-reveal">
+    <span class="card-title activator">Equipment
+      <a id="close" class="btn-floating btn-large waves-effect waves-light pink right"><i class="material-icons">close</i></a>
+    </span>
+    <div id="newEquipmentForm" class="row">
+      <form class="col s12" action="/equipments" method="post">
+        {{# if equipment.errors}}
+        <div class="row">
+          <div id="equipmentError" class="col s12 pink-text">
+            {{equipment.errors}}
+          </div>
+        </div>
+        {{/if}}
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="name" name="name" type="text">
+            <label for="name">Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="totalForCheckout" name="totalForCheckout" type="number">
+            <label for="totalForCheckout">Total Available for Checkout</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {{#each categories}}
+              <p>
+                <label for="categoryIds-{{id}}">
+                  <input type="checkbox" id="categoryIds-{{id}}" name="categoryIds" value="{{id}}"/>
+                  <span>{{name}}</span>
+                </label>
+              </p>
+            {{/each}}
+          </div>
+        </div>
+        <button id="login" class="btn waves-effect waves-light" type="submit" name="action">Add this Equipment
+          <i class="material-icons right"></i>
+        </button>
+      </form>
     </div>
   </div>
-{{/if}}
+</div>
 
 <script type="text/javascript" src="/javascripts/stickyHeaders.js"></script>

@@ -8,8 +8,10 @@ exports.create = async (req, res) => {
     });
   } else {
     req.session.userId = user.id;
-    await req.session.save();
-    res.redirect('/admin');
+    req.session.save(err => {
+      if (err) return next(err)
+      res.redirect('/admin')
+    })
   }
 };
 
