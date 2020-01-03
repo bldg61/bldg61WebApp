@@ -50,13 +50,13 @@
         {{/if}}
         <div class="row">
           <div class="input-field col s12">
-            <input id="name" name="name" type="text" class="validate">
+            <input id="name" name="name" type="text">
             <label for="name">Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="totalForCheckout" name="totalForCheckout" type="number" class="validate">
+            <input id="totalForCheckout" name="totalForCheckout" type="number">
             <label for="totalForCheckout">Total Available for Checkout</label>
           </div>
         </div>
@@ -73,6 +73,9 @@
           </div>
         </div>
         <div class="modal-footer">
+          <a class="modal-close btn waves-effect waves-light pink">Cancel
+            <i class="material-icons right"></i>
+          </a>
           <button id="createEquipment" class="modal-close btn waves-effect waves-light" type="submit" name="action">Add
             <i class="material-icons right"></i>
           </button>
