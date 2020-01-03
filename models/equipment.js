@@ -81,6 +81,15 @@ exports.findByName = async name => {
 
 async function validate(properties) {
   const errors = [];
+  if (properties.name === '') {
+    const error = 'Name cannot be blank';
+    errors.push(error);
+  }
+  if (properties.totalForCheckout === '') {
+    const error = 'Total for checkout cannot be blank';
+    errors.push(error);
+  }
+
   const existingEquipment = await exports.findByName(properties.name);
   if (existingEquipment) {
     const error = 'Name already taken';

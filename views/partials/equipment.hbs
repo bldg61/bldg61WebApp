@@ -43,20 +43,22 @@
       <form class="col s12" action="/equipments" method="post">
         {{# if equipment.errors}}
         <div class="row">
-          <div id="equipmentError" class="col s12 pink-text">
-            {{equipment.errors}}
-          </div>
+          {{#each equipment.errors}}
+            <div id="equipmentError" class="col s12 pink-text">
+              {{this}}
+            </div>
+          {{/each}}
         </div>
         {{/if}}
         <div class="row">
           <div class="input-field col s12">
-            <input id="name" name="name" type="text">
+            <input id="name" name="name" type="text" class="validate">
             <label for="name">Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="totalForCheckout" name="totalForCheckout" type="number">
+            <input id="totalForCheckout" name="totalForCheckout" type="number" class="validate">
             <label for="totalForCheckout">Total Available for Checkout</label>
           </div>
         </div>
