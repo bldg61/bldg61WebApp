@@ -1,0 +1,52 @@
+<div id="editEquipmentForm-{{id}}" class="modal">
+  <div class="modal-content">
+    <h4>Edit Equipment</h4>
+    <form class="col s12" action="/equipments/{{id}}" method="post">
+      {{#if this.errors}}
+      <div class="row">
+        {{#each this.errors}}
+          <div id="equipmentError-{{id}}" class="col s12 pink-text">
+            {{this}}
+          </div>
+        {{/each}}
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name-{{id}}" name="name" type="text" value="{{name}}">
+          <label for="name">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="totalForCheckout-{{id}}" name="totalForCheckout" type="number" value={{totalForCheckout}}>
+          <label for="totalForCheckout">Total Available for Checkout</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          {{#each allCategories}}
+            <p>
+              <label for="editCategoryIds{{...id}}-{{id}}">
+                {{#if (myCategory id ...categories)}}
+                  <input type="checkbox" id="editCategoryIds{{...id}}-{{id}}" name="categoryIds" value="{{id}}" checked/>
+                {{else}}
+                  <input type="checkbox" id="editCategoryIds{{...id}}-{{id}}" name="categoryIds" value="{{id}}"/>
+                {{/if}}
+                <span id="editCategoryIdsCheckbox{{...id}}-{{id}}">{{name}}</span>
+              </label>
+            </p>
+          {{/each}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">Cancel
+          <i class="material-icons right"></i>
+        </a>
+        <button id="submitEditEquipment-{{id}}" class="modal-close btn waves-effect waves-light" type="submit" name="action">Update
+          <i class="material-icons right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

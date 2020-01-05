@@ -18,7 +18,18 @@ exports.all = async () => {
     )).rows
     return { ...equipment, categories}
   })
-  return Promise.all(equipmentsWithCategories)
+
+  return (await Promise.all(equipmentsWithCategories)).sort((equipmentA, equipmentB) => {
+    const nameA = equipmentA.name.toUpperCase();
+    const nameB = equipmentB.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  })
 }
 
 exports.create = async properties => {
@@ -68,6 +79,15 @@ exports.create = async properties => {
   })
 };
 
+exports.find = async id => {
+  const equipment = (await query(
+    'SELECT * FROM "equipments" WHERE "id" = $1 LIMIT 1',
+    [
+      id,
+    ],
+  )).rows[0];
+  return equipment;
+};
 
 exports.findByName = async name => {
   const category = (await query(
@@ -77,6 +97,88 @@ exports.findByName = async name => {
     ],
   )).rows[0];
   return category;
+};
+
+exports.update = async newProperties => {
+  const oldProps = await this.find(newProperties.id)
+  const properties = { ...oldProps, ...newProperties };
+
+  const errors = await validate(properties);
+  if (errors) {
+    return { errors };
+  }
+
+  const updatedEquipment = (await query(
+    `UPDATE "equipments" SET
+    "name"=$1,
+    "totalForCheckout"=$2 WHERE id=$3 RETURNING *`,
+    [
+      properties.name,
+      properties.totalForCheckout,
+      properties.id,
+    ],
+  )).rows[0];
+
+  const oldCategoryIds = (await query(
+    `SELECT
+      categories.id,
+      categories.name
+    FROM categorizations, categories
+    WHERE categorizations."equipmentId" = ($1)
+    AND categorizations."categoryId" = categories.id;`,
+    [
+      properties.id
+    ]
+  )).rows.map(category => category.id);
+
+
+  const newCategoryIds =
+    (properties.categoryIds === undefined ? []
+    : typeof properties.categoryIds === 'string' ? [ properties.categoryIds ]
+    : [ ...properties.categoryIds ]).map(stringId => Number(stringId));
+
+  const categorizationsToDelete = oldCategoryIds.filter(oldId => !newCategoryIds.includes(oldId))
+  const categorizationsToCreate = newCategoryIds.filter(newId => !oldCategoryIds.includes(newId))
+
+  categorizationsToCreate.map(async categoryId => {
+    const categorization = (await query(
+      `INSERT INTO "categorizations"(
+        "categoryId",
+        "equipmentId"
+      ) values ($1, $2) returning *`,
+      [
+        categoryId,
+        properties.id,
+      ],
+    )).rows;
+  })
+
+  await categorizationsToDelete.map(async categoryId => {
+    const categorization = (await query(
+      `DELETE FROM "categorizations"
+        WHERE "categoryId" = $1
+        AND "equipmentId" = $2
+      returning *`,
+      [
+        categoryId,
+        properties.id,
+      ],
+    )).rows;
+  })
+
+  const categories = (await query(
+    `SELECT
+      categories.id,
+      categories.name
+    FROM categorizations, categories
+    WHERE categorizations."equipmentId" = ($1)
+    AND categorizations."categoryId" = categories.id;`,
+    [
+      properties.id,
+    ]
+  )).rows
+
+  return { ...updatedEquipment, categories}
 };
 
 async function validate(properties) {
@@ -90,8 +192,10 @@ async function validate(properties) {
     errors.push(error);
   }
 
-  const existingEquipment = await exports.findByName(properties.name);
-  if (existingEquipment) {
+  const existingEquipmentName = await exports.findByName(properties.name);
+  const forDifferentEquipment = existingEquipmentName ?
+    existingEquipmentName.id !== Number(properties.id) : false;
+  if (existingEquipmentName && forDifferentEquipment) {
     const error = 'Name already taken';
     errors.push(error);
   }

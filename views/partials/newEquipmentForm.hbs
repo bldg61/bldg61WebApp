@@ -1,0 +1,48 @@
+<div id="newEquipmentForm" class="modal">
+  <div class="modal-content">
+    <h4>New Equipment</h4>
+    <form class="col s12" action="/equipments" method="post">
+      {{# if equipment.errors}}
+      <div class="row">
+        {{#each equipment.errors}}
+          <div id="equipmentError" class="col s12 pink-text">
+            {{this}}
+          </div>
+        {{/each}}
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name" name="name" type="text">
+          <label for="name">Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="totalForCheckout" name="totalForCheckout" type="number">
+          <label for="totalForCheckout">Total Available for Checkout</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          {{#each categories}}
+            <p>
+              <label for="categoryIds-{{id}}">
+                <input type="checkbox" id="categoryIds-{{id}}" name="categoryIds" value="{{id}}"/>
+                <span id="categoryIds-checkbox-{{id}}">{{name}}</span>
+              </label>
+            </p>
+          {{/each}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">Cancel
+          <i class="material-icons right"></i>
+        </a>
+        <button id="createEquipment" class="modal-close btn waves-effect waves-light" type="submit" name="action">Add
+          <i class="material-icons right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
