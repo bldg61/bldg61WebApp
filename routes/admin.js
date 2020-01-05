@@ -8,8 +8,8 @@ const adminController = require('../controllers/admin');
 hbs.registerHelper({
   myCategory: (thisCategoryId, myCategories) => {
     return myCategories.some(category => {
-      return category.id === thisCategoryId
-    })
+      return category.id === thisCategoryId;
+    });
   },
 });
 

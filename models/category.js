@@ -2,10 +2,10 @@ const { query } = require('../db/index');
 
 exports.all = async () => {
   const categories = (await query(
-    'SELECT * FROM "categories"'
+    'SELECT * FROM "categories"',
   )).rows;
   return categories;
-}
+};
 
 exports.create = async properties => {
   const errors = await validate(properties);

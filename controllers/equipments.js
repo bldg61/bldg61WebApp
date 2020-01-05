@@ -6,8 +6,8 @@ exports.create = async (req, res) => {
   const equipment = await Equipment.create(req.body);
   if (equipment.errors) {
     const currentUser = await User.find(req.session.userId);
-    const categories = await Category.all()
-    const equipments = await Equipment.all()
+    const categories = await Category.all();
+    const equipments = await Equipment.all();
     res.render('admin', {
       currentUser,
       equipment,
@@ -20,18 +20,18 @@ exports.create = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  const id = req.params.id;
-  const deletedEquipment = await Equipment.delete(id);
+  const { id } = req.params;
+  await Equipment.delete(id);
   res.redirect('/admin');
-}
+};
 
 exports.update = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const equipment = await Equipment.update({ ...req.body, id });
   if (equipment.errors) {
     const currentUser = await User.find(req.session.userId);
-    const categories = await Category.all()
-    const equipments = await Equipment.all()
+    const categories = await Category.all();
+    const equipments = await Equipment.all();
     res.render('admin', {
       currentUser,
       equipment,

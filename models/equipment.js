@@ -2,7 +2,7 @@ const { query } = require('../db/index');
 
 exports.all = async () => {
   const equipments = (await query(
-    'SELECT * FROM "equipments"'
+    'SELECT * FROM "equipments"',
   )).rows;
   const equipmentsWithCategories = equipments.map(async equipment => {
     const categories = (await query(
@@ -13,11 +13,11 @@ exports.all = async () => {
       WHERE categorizations."equipmentId" = ($1)
       AND categorizations."categoryId" = categories.id;`,
       [
-        equipment.id
-      ]
-    )).rows
-    return { ...equipment, categories}
-  })
+        equipment.id,
+      ],
+    )).rows;
+    return { ...equipment, categories };
+  });
 
   return (await Promise.all(equipmentsWithCategories)).sort((equipmentA, equipmentB) => {
     const nameA = equipmentA.name.toUpperCase();
@@ -29,27 +29,28 @@ exports.all = async () => {
       return 1;
     }
     return 0;
-  })
-}
+  });
+};
 
 exports.delete = async id => {
-  const categorizations = (await query(
+  await query(
     `DELETE FROM "categorizations"
       WHERE "equipmentId" = $1
     returning *`,
     [
       id,
     ],
-  )).rows;
-  const equipment = (await query(
+  );
+  await query(
     `DELETE FROM "equipments"
       WHERE "id" = $1
     returning *`,
     [
       id,
     ],
-  )).rows;
-}
+  );
+  return {};
+};
 
 exports.create = async properties => {
   const errors = await validate(properties);
@@ -74,7 +75,7 @@ exports.create = async properties => {
     : [ ...properties.categoryIds ];
 
   const promisedCategories = categoryIds.map(async categoryId => {
-    const categorization = (await query(
+    await query(
       `INSERT INTO "categorizations"(
         "categoryId",
         "equipmentId"
@@ -83,19 +84,19 @@ exports.create = async properties => {
         categoryId,
         createdEquipment.id,
       ],
-    )).rows[0];
+    );
     const category = (await query(
-      `SELECT * FROM "categories" WHERE "id" = ($1) LIMIT 1`,
+      'SELECT * FROM "categories" WHERE "id" = ($1) LIMIT 1',
       [
         categoryId,
       ],
     )).rows[0];
     return category;
-  })
+  });
 
   return Promise.all(promisedCategories).then(categories => {
     return { ...createdEquipment, categories };
-  })
+  });
 };
 
 exports.find = async id => {
@@ -119,7 +120,7 @@ exports.findByName = async name => {
 };
 
 exports.update = async newProperties => {
-  const oldProps = await this.find(newProperties.id)
+  const oldProps = await this.find(newProperties.id);
   const properties = { ...oldProps, ...newProperties };
 
   const errors = await validate(properties);
@@ -146,8 +147,8 @@ exports.update = async newProperties => {
     WHERE categorizations."equipmentId" = ($1)
     AND categorizations."categoryId" = categories.id;`,
     [
-      properties.id
-    ]
+      properties.id,
+    ],
   )).rows.map(category => category.id);
 
 
@@ -156,11 +157,11 @@ exports.update = async newProperties => {
     : typeof properties.categoryIds === 'string' ? [ properties.categoryIds ]
     : [ ...properties.categoryIds ]).map(stringId => Number(stringId));
 
-  const categorizationsToDelete = oldCategoryIds.filter(oldId => !newCategoryIds.includes(oldId))
-  const categorizationsToCreate = newCategoryIds.filter(newId => !oldCategoryIds.includes(newId))
+  const categorizationsToDelete = oldCategoryIds.filter(oldId => !newCategoryIds.includes(oldId));
+  const categorizationsToCreate = newCategoryIds.filter(newId => !oldCategoryIds.includes(newId));
 
   categorizationsToCreate.map(async categoryId => {
-    const categorization = (await query(
+    await query(
       `INSERT INTO "categorizations"(
         "categoryId",
         "equipmentId"
@@ -169,11 +170,11 @@ exports.update = async newProperties => {
         categoryId,
         properties.id,
       ],
-    )).rows;
-  })
+    );
+  });
 
   await categorizationsToDelete.map(async categoryId => {
-    const categorization = (await query(
+    await query(
       `DELETE FROM "categorizations"
         WHERE "categoryId" = $1
         AND "equipmentId" = $2
@@ -182,8 +183,8 @@ exports.update = async newProperties => {
         categoryId,
         properties.id,
       ],
-    )).rows;
-  })
+    );
+  });
 
   const categories = (await query(
     `SELECT
@@ -194,10 +195,10 @@ exports.update = async newProperties => {
     AND categorizations."categoryId" = categories.id;`,
     [
       properties.id,
-    ]
-  )).rows
+    ],
+  )).rows;
 
-  return { ...updatedEquipment, categories}
+  return { ...updatedEquipment, categories };
 };
 
 async function validate(properties) {
@@ -212,8 +213,8 @@ async function validate(properties) {
   }
 
   const existingEquipmentName = await exports.findByName(properties.name);
-  const forDifferentEquipment = existingEquipmentName ?
-    existingEquipmentName.id !== Number(properties.id) : false;
+  const forDifferentEquipment = existingEquipmentName
+    ? existingEquipmentName.id !== Number(properties.id) : false;
   if (existingEquipmentName && forDifferentEquipment) {
     const error = 'Name already taken';
     errors.push(error);

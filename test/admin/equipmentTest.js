@@ -26,7 +26,7 @@ describe('Admin path', async () => {
       const equipment = await Equipment.create({
         name: 'Sewing Machine',
         totalForCheckout: 25,
-        categoryIds: [category1.id, category2.id, category3.id]
+        categoryIds: [category1.id, category2.id, category3.id],
       });
 
       await driver.get('http://localhost:1500/admin');
@@ -83,5 +83,5 @@ describe('Admin path', async () => {
     } finally {
       await driver.quit();
     }
-  }).timeout(50000)
-})
+  }).timeout(50000);
+});
