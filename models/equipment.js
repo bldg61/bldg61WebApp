@@ -32,6 +32,25 @@ exports.all = async () => {
   })
 }
 
+exports.delete = async id => {
+  const categorizations = (await query(
+    `DELETE FROM "categorizations"
+      WHERE "equipmentId" = $1
+    returning *`,
+    [
+      id,
+    ],
+  )).rows;
+  const equipment = (await query(
+    `DELETE FROM "equipments"
+      WHERE "id" = $1
+    returning *`,
+    [
+      id,
+    ],
+  )).rows;
+}
+
 exports.create = async properties => {
   const errors = await validate(properties);
   if (errors) {

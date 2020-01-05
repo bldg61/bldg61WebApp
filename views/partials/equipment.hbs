@@ -31,6 +31,9 @@
                   <a id="editEquipment-{{id}}" class="waves-effect waves-light btn modal-trigger" href="#editEquipmentForm-{{id}}">
                     <i class="material-icons">edit</i>
                   </a>
+                  <a id="deleteEquipment-{{id}}" class="waves-effect waves-light btn modal-trigger" href="#deleteEquipmentAlert-{{id}}">
+                    <i class="material-icons">delete</i>
+                  </a>
                 </td>
               </tr>
               {{/each}}
@@ -43,5 +46,6 @@
   {{> newEquipmentForm}}
   {{#each equipments}}
     {{> editEquipmentForm allCategories=../categories}}
+    {{> deleteEquipmentAlert}}
   {{/each}}
 </div>

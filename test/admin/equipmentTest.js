@@ -8,7 +8,7 @@ const Equipment = require('../../models/equipment');
 const User = require('../../models/user');
 
 describe('Admin path', async () => {
-  it('allows admins to see list, create, update equipment', async () => {
+  it('allows admins to see list, create, update, delete equipment', async () => {
     const driver = await new Builder().forBrowser('chrome').build();
     try {
       const user = await User.create({
@@ -70,6 +70,15 @@ describe('Admin path', async () => {
         expect(text).to.contain('Soldering Iron');
         expect(text).to.contain('1');
         expect(text).to.not.contain(category4.name);
+      });
+
+      await driver.findElement(By.id(`deleteEquipment-${solderingIron.id}`)).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`submitDeleteEquipment-${solderingIron.id}`))), 6000);
+      await driver.findElement(By.id(`submitDeleteEquipment-${solderingIron.id}`)).click();
+
+      await driver.findElement(By.id('equipmentAvailable')).getText().then(text => {
+        expect(text).to.not.contain('Soldering Iron');
+        expect(text).to.not.contain('1');
       });
     } finally {
       await driver.quit();

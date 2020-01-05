@@ -19,6 +19,12 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.delete = async (req, res) => {
+  const id = req.params.id;
+  const deletedEquipment = await Equipment.delete(id);
+  res.redirect('/admin');
+}
+
 exports.update = async (req, res) => {
   const id = req.params.id;
   const equipment = await Equipment.update({ ...req.body, id });
