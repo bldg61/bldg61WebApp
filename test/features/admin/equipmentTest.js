@@ -1,11 +1,11 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const { expect } = require('chai');
 
-require('../helpers/testSetup');
+require('../../helpers/testSetup');
 
-const Category = require('../../models/category');
-const Equipment = require('../../models/equipment');
-const User = require('../../models/user');
+const Category = require('../../../models/category');
+const Equipment = require('../../../models/equipment');
+const User = require('../../../models/user');
 
 describe('Admin path', async () => {
   it('allows admins to see list, create, update, delete equipment', async () => {

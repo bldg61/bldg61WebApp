@@ -1,9 +1,9 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const { expect } = require('chai');
 
-require('../helpers/testSetup');
+require('../../helpers/testSetup');
 
-const User = require('../../models/user');
+const User = require('../../../models/user');
 
 describe('Admin path', async () => {
   it('allows users to login with good email and password', async () => {
