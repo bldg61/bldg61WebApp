@@ -6,7 +6,7 @@ exports.index = async (req, res) => {
   const currentUser = await User.find(req.session.userId);
   const categories = await Category.all();
   const equipments = await Equipment.all();
-  res.render('admin', {
+  return res.render('admin', {
     currentUser,
     equipments,
     categories,

@@ -3,7 +3,7 @@ const User = require('../models/user');
 exports.create = async (req, res, next) => {
   const user = await User.authenticate(req.body);
   if (user.errors) {
-    res.render('login', {
+    return res.render('login', {
       user,
     });
   } else {
@@ -16,5 +16,5 @@ exports.create = async (req, res, next) => {
 };
 
 exports.new = (req, res) => {
-  res.render('login');
+  return res.render('login');
 };

@@ -38,12 +38,7 @@ exports.create = async properties => {
     ],
   )).rows[0];
 
-  const categoryIds =
-    properties.categoryIds === undefined ? []
-    : typeof properties.categoryIds === 'string' ? [ properties.categoryIds ]
-    : [ ...properties.categoryIds ];
-
-  const promisedCategories = categoryIds.map(async categoryId => {
+  const promisedCategories = properties.categoryIds.map(async categoryId => {
     await query(
       `INSERT INTO "categorizations"(
         "categoryId",
@@ -100,7 +95,18 @@ exports.find = async id => {
 
 exports.findByName = async name => {
   const category = (await query(
-    'SELECT * FROM "equipments" WHERE "name" = $1 LIMIT 1',
+    `SELECT
+      equipments."id",
+      equipments."name",
+      equipments."totalForCheckout",
+      equipments."createdAt",
+      equipments."updatedAt",
+      ARRAY(
+        SELECT json_build_object('id', categories.id, 'name', categories.name)
+        FROM categorizations, categories
+          WHERE categories.id = categorizations."categoryId"
+          AND equipments.id = categorizations."equipmentId") as categories
+    FROM equipments WHERE "name"=$1`,
     [
       name,
     ],
