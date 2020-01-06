@@ -1,5 +1,7 @@
 const { query } = require('../db/index');
 
+const sortByObjectName = require('../lib/sortByObjectName');
+
 exports.all = async () => {
   const equipments = (await query(
     `SELECT
@@ -16,17 +18,7 @@ exports.all = async () => {
     FROM equipments`
   )).rows
 
-  return equipments.sort((equipmentA, equipmentB) => {
-    const nameA = equipmentA.name.toUpperCase();
-    const nameB = equipmentB.name.toUpperCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  });
+  return equipments.sort(sortByObjectName);
 };
 
 exports.create = async properties => {
