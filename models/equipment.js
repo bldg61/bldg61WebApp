@@ -2,24 +2,21 @@ const { query } = require('../db/index');
 
 exports.all = async () => {
   const equipments = (await query(
-    'SELECT * FROM "equipments"',
-  )).rows;
-  const equipmentsWithCategories = equipments.map(async equipment => {
-    const categories = (await query(
-      `SELECT
-        categories.id,
-        categories.name
-      FROM categorizations, categories
-      WHERE categorizations."equipmentId" = ($1)
-      AND categorizations."categoryId" = categories.id;`,
-      [
-        equipment.id,
-      ],
-    )).rows;
-    return { ...equipment, categories };
-  });
+    `SELECT
+      equipments."id",
+      equipments."name",
+      equipments."totalForCheckout",
+      equipments."createdAt",
+      equipments."updatedAt",
+      ARRAY(
+        SELECT json_build_object('id', categories.id, 'name', categories.name)
+        FROM categorizations, categories
+          WHERE categories.id = categorizations."categoryId"
+          AND equipments.id = categorizations."equipmentId") as categories
+    FROM equipments`
+  )).rows
 
-  return (await Promise.all(equipmentsWithCategories)).sort((equipmentA, equipmentB) => {
+  return equipments.sort((equipmentA, equipmentB) => {
     const nameA = equipmentA.name.toUpperCase();
     const nameB = equipmentB.name.toUpperCase();
     if (nameA < nameB) {
