@@ -1,7 +1,13 @@
 <div class="card">
   <div class="card-content">
     <span class="card-title">Equipment
-      <a id="addEquipment" class="btn-floating btn-large waves-effect waves-light pink right modal-trigger" href="#newEquipmentForm"><i class="material-icons">add</i></a>
+      <a
+        id="addEquipment"
+        class="btn-floating btn-large waves-effect waves-light pink right modal-trigger"
+        href="#newEquipmentForm"
+      >
+        <i class="material-icons">add</i>
+      </a>
     </span>
 
     {{#if equipments.length}}
@@ -28,10 +34,18 @@
                   {{/each}}
                 </td>
                 <td>
-                  <a id="editEquipment-{{id}}" class="waves-effect waves-light btn modal-trigger" href="#editEquipmentForm-{{id}}">
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#editEquipmentForm-{{id}}"
+                    id="editEquipment-{{id}}"
+                  >
                     <i class="material-icons">edit</i>
                   </a>
-                  <a id="deleteEquipment-{{id}}" class="waves-effect waves-light btn modal-trigger" href="#deleteEquipmentAlert-{{id}}">
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#deleteEquipmentAlert-{{id}}"
+                    id="deleteEquipment-{{id}}"
+                  >
                     <i class="material-icons">delete</i>
                   </a>
                 </td>

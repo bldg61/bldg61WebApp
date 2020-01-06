@@ -1,6 +1,10 @@
 <div id="deleteEquipmentAlert-{{id}}" class="modal">
   <div class="modal-content">
-    <form class="col s21" action="/equipments/{{id}}/delete" method="post">
+    <form
+      class="col s21"
+      action="/equipments/{{id}}/delete"
+      method="post"
+    >
       <h4>
         Are you sure you want to delete the {{totalForCheckout}} items named {{name}}?
       </h4>
@@ -17,7 +21,6 @@
           name="action"
         >
           Delete
-          <i class="material-icons right"></i>
         </button>
       </div>
     </form>

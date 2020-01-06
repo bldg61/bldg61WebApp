@@ -13,13 +13,23 @@
       {{/if}}
       <div class="row">
         <div class="input-field col s12">
-          <input id="name-{{id}}" name="name" type="text" value="{{name}}">
+          <input
+            id="name-{{id}}"
+            name="name"
+            type="text"
+            value="{{name}}"
+          />
           <label for="name">Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="totalForCheckout-{{id}}" name="totalForCheckout" type="number" value={{totalForCheckout}}>
+          <input
+            id="totalForCheckout-{{id}}"
+            name="totalForCheckout"
+            type="number"
+            value={{totalForCheckout}}
+          />
           <label for="totalForCheckout">Total Available for Checkout</label>
         </div>
       </div>
@@ -28,10 +38,21 @@
           {{#each allCategories}}
             <p>
               <label for="editCategoryIds{{...id}}-{{id}}">
-                {{#if (myCategory id ...categories)}}
-                  <input type="checkbox" id="editCategoryIds{{...id}}-{{id}}" name="categoryIds" value="{{id}}" checked/>
+                {{#if (equipmentCategory id ...categories)}}
+                  <input
+                    checked
+                    id="editCategoryIds{{...id}}-{{id}}"
+                    name="categoryIds"
+                    type="checkbox"
+                    value="{{id}}"
+                  />
                 {{else}}
-                  <input type="checkbox" id="editCategoryIds{{...id}}-{{id}}" name="categoryIds" value="{{id}}"/>
+                  <input
+                    id="editCategoryIds{{...id}}-{{id}}"
+                    name="categoryIds"
+                    type="checkbox"
+                    value="{{id}}"
+                  />
                 {{/if}}
                 <span id="editCategoryIdsCheckbox{{...id}}-{{id}}">{{name}}</span>
               </label>
@@ -40,11 +61,13 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="modal-close btn waves-effect waves-light pink">Cancel
-          <i class="material-icons right"></i>
-        </a>
-        <button id="submitEditEquipment-{{id}}" class="modal-close btn waves-effect waves-light" type="submit" name="action">Update
-          <i class="material-icons right"></i>
+        <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
+        <button
+          id="submitEditEquipment-{{id}}"
+          class="modal-close btn waves-effect waves-light"
+          type="submit" name="action"
+        >
+          Update
         </button>
       </div>
     </form>

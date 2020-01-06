@@ -32,26 +32,6 @@ exports.all = async () => {
   });
 };
 
-exports.delete = async id => {
-  await query(
-    `DELETE FROM "categorizations"
-      WHERE "equipmentId" = $1
-    returning *`,
-    [
-      id,
-    ],
-  );
-  await query(
-    `DELETE FROM "equipments"
-      WHERE "id" = $1
-    returning *`,
-    [
-      id,
-    ],
-  );
-  return {};
-};
-
 exports.create = async properties => {
   const errors = await validate(properties);
   if (errors) {
@@ -97,6 +77,26 @@ exports.create = async properties => {
   return Promise.all(promisedCategories).then(categories => {
     return { ...createdEquipment, categories };
   });
+};
+
+exports.delete = async id => {
+  await query(
+    `DELETE FROM "categorizations"
+      WHERE "equipmentId" = $1
+    returning *`,
+    [
+      id,
+    ],
+  );
+  await query(
+    `DELETE FROM "equipments"
+      WHERE "id" = $1
+    returning *`,
+    [
+      id,
+    ],
+  );
+  return {};
 };
 
 exports.find = async id => {

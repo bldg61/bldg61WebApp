@@ -1,7 +1,11 @@
 <div id="newEquipmentForm" class="modal">
   <div class="modal-content">
     <h4>New Equipment</h4>
-    <form class="col s12" action="/equipments" method="post">
+    <form
+      action="/equipments"
+      class="col s12"
+      method="post"
+    >
       {{# if equipment.errors}}
       <div class="row">
         {{#each equipment.errors}}
@@ -36,11 +40,14 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="modal-close btn waves-effect waves-light pink">Cancel
-          <i class="material-icons right"></i>
-        </a>
-        <button id="createEquipment" class="modal-close btn waves-effect waves-light" type="submit" name="action">Add
-          <i class="material-icons right"></i>
+        <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
+        <button
+          class="modal-close btn waves-effect waves-light"
+          id="createEquipment"
+          name="action"
+          type="submit"
+        >
+          Add
         </button>
       </div>
     </form>
