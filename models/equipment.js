@@ -34,7 +34,7 @@ exports.create = async properties => {
     ) values ($1, $2) returning *`,
     [
       properties.name,
-      properties.totalForCheckout,
+      properties.totalForCheckout || 0,
     ],
   )).rows[0];
 
@@ -200,10 +200,6 @@ async function validate(properties) {
   const errors = [];
   if (properties.name === '') {
     const error = 'Name cannot be blank';
-    errors.push(error);
-  }
-  if (properties.totalForCheckout === '') {
-    const error = 'Total for checkout cannot be blank';
     errors.push(error);
   }
 

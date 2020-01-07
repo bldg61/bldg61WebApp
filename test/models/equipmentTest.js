@@ -27,4 +27,19 @@ describe('Equipment', async () => {
     expect(Object.keys(allEquipment[0].categories[0])).to.contain('id')
     expect(allEquipment[0].categories[0].name).to.equal('sewing')
   })
+
+  it('create defaults totalForCheckout to zero', async () => {
+    const equipmentEmptyTFC = await Equipment.create({
+      name: 'sewing awl',
+      totalForCheckout: '',
+      categoryIds: []
+    })
+    const equipmentMissingTFC = await Equipment.create({
+      name: 'ironing board',
+      categoryIds: []
+    })
+
+    expect(equipmentEmptyTFC.totalForCheckout).to.equal(0)
+    expect(equipmentMissingTFC.totalForCheckout).to.equal(0)
+  })
 });

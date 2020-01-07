@@ -59,7 +59,6 @@ describe('Equipment Controller', async () => {
     const req = {
       body: {
         name: '',
-        totalForCheckout: '',
       },
       session: {
         userId: 1,
@@ -72,12 +71,11 @@ describe('Equipment Controller', async () => {
     };
     const response = await equipmentsController.create(req, res);
     expect(response.view).to.equal('admin');
-    expect(response.object.equipment.errors.length).to.equal(2);
+    expect(response.object.equipment.errors.length).to.equal(1);
     expect(response.object.equipment.errors[0]).to.equal('Name cannot be blank');
-    expect(response.object.equipment.errors[1]).to.equal('Total for checkout cannot be blank');
   });
 
-  it('update returns errors when changing name, totalForCheckout to empty string', async () => {
+  it('update returns errors when changing name to empty string', async () => {
     const equipment = await Equipment.create({
       name: 'Laptop',
       totalForCheckout: 3,
@@ -102,8 +100,7 @@ describe('Equipment Controller', async () => {
     };
     const response = await equipmentsController.create(req, res);
     expect(response.view).to.equal('admin');
-    expect(response.object.equipment.errors.length).to.equal(2);
+    expect(response.object.equipment.errors.length).to.equal(1);
     expect(response.object.equipment.errors[0]).to.equal('Name cannot be blank');
-    expect(response.object.equipment.errors[1]).to.equal('Total for checkout cannot be blank');
   });
 });
