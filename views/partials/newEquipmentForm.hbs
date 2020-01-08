@@ -6,13 +6,9 @@
       class="col s12"
       method="post"
     >
-      {{# if equipment.errors}}
+      {{# if errors}}
       <div class="row">
-        {{#each equipment.errors}}
-          <div id="equipmentError" class="col s12 pink-text">
-            {{this}}
-          </div>
-        {{/each}}
+        <div id="equipmentError" class="col s12 pink-text"></div>
       </div>
       {{/if}}
       <div class="row">

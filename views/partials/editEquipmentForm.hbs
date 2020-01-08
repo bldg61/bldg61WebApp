@@ -2,15 +2,14 @@
   <div class="modal-content">
     <h4>Edit Equipment</h4>
     <form class="col s12" action="/equipments/{{id}}" method="post">
-      {{#if this.errors}}
-      <div class="row">
-        {{#each this.errors}}
-          <div id="equipmentError-{{id}}" class="col s12 pink-text">
-            {{this}}
-          </div>
-        {{/each}}
+      {{#if ../errors}}
+      <div class="">
+        HERE
       </div>
       {{/if}}
+      <div class="row">
+        <div id="equipmentError-{{id}}" class="col s12 pink-text"></div>
+      </div>
       <div class="row">
         <div class="input-field col s12">
           <input

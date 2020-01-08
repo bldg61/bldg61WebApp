@@ -24,7 +24,7 @@ exports.all = async () => {
 exports.create = async properties => {
   const errors = await validate(properties);
   if (errors) {
-    return { errors };
+    return { errors, properties };
   }
 
   const createdEquipment = (await query(
@@ -120,7 +120,7 @@ exports.update = async newProperties => {
 
   const errors = await validate(properties);
   if (errors) {
-    return { errors };
+    return { errors, properties };
   }
 
   const updatedEquipment = (await query(

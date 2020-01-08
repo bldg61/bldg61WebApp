@@ -11,6 +11,9 @@ hbs.registerHelper({
       return category.id === categoryIdToCheck;
     });
   },
+  jsonStringify: object => {
+    return JSON.stringify(object)
+  },
 });
 
 router.get('/', adminController.index);

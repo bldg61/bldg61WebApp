@@ -1,5 +1,4 @@
 <h1 id="adminGreeting">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}!</h1>
-
 <div class="row">
   <div class="col s12">
     <ul class="tabs">
@@ -8,3 +7,33 @@
   </div>
   <div id="equipment" class="col s12">{{> equipment }}</div>
 </div>
+
+<script src="/javascripts/materializeScriptInitializations.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  if ('{{errors}}') {
+    const errors = JSON.parse('{{jsonStringify errors}}'.replace(/&quot;/g,'"'));
+    const errorType = Object.keys(errors)[0];
+    const objectId = errors[errorType].properties.id;
+    const newOrUpdate = objectId ? 'edit' : 'new';
+    const updateOnlyAppend = objectId ? `-${objectId}` : '';
+
+    const modalWithErrors = M.Modal.getInstance(
+      document.querySelector(`#${newOrUpdate}${capitalize(errorType)}Form${updateOnlyAppend}`)
+    )
+    modalWithErrors.open();
+
+    const errorDiv = document.querySelector(`#${errorType}Error${updateOnlyAppend}`)
+    const errorsHTML = errors.equipment.errors.map( errorText => {
+      return `${errorText}<br>`
+    })
+    errorDiv.innerHTML = errorsHTML
+  }
+
+});
+
+function capitalize(string) {
+  return string[0].toUpperCase() + string.slice(1)
+}
+
+</script>
