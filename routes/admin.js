@@ -12,7 +12,7 @@ hbs.registerHelper({
     });
   },
   jsonStringify: object => {
-    return JSON.stringify(object)
+    return JSON.stringify(object);
   },
 });
 

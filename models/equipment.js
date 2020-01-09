@@ -15,8 +15,8 @@ exports.all = async () => {
         FROM categorizations, categories
           WHERE categories.id = categorizations."categoryId"
           AND equipments.id = categorizations."equipmentId") as categories
-    FROM equipments`
-  )).rows
+    FROM equipments`,
+  )).rows;
 
   return equipments.sort(sortByObjectName);
 };
@@ -149,8 +149,8 @@ exports.update = async newProperties => {
 
   const newCategoryIds =
     (properties.categoryIds === undefined ? []
-    : typeof properties.categoryIds === 'string' ? [ properties.categoryIds ]
-    : [ ...properties.categoryIds ]).map(stringId => Number(stringId));
+    : typeof properties.categoryIds === 'string' ? [properties.categoryIds]
+    : [...properties.categoryIds]).map(stringId => Number(stringId));
 
   const categorizationsToDelete = oldCategoryIds.filter(oldId => !newCategoryIds.includes(oldId));
   const categorizationsToCreate = newCategoryIds.filter(newId => !oldCategoryIds.includes(newId));

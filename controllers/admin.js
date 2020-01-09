@@ -10,10 +10,10 @@ exports.index = async (req, res) => {
     categories,
     currentUser,
     equipments,
-  }
+  };
   if (req.session.errors) {
-    const errors = { ...req.session.errors}
-    req.session.errors = undefined
+    const errors = { ...req.session.errors };
+    req.session.errors = undefined;
     return res.render('admin', { ...adminDashboardData, errors });
   }
   return res.render('admin', adminDashboardData);
