@@ -42,4 +42,34 @@ describe('Equipment', async () => {
     expect(equipmentEmptyTFC.totalForCheckout).to.equal(0)
     expect(equipmentMissingTFC.totalForCheckout).to.equal(0)
   })
+
+  it('create returns errors when no name is supplied', async () => {
+    const equipmentMissingName = await Equipment.create({ })
+    const equipmentEmptyName = await Equipment.create({
+      name: '',
+    })
+    expect(Object.keys(equipmentMissingName)).to.contain('errors');
+    expect(Object.keys(equipmentMissingName)).to.contain('properties');
+    expect(Object.keys(equipmentEmptyName)).to.contain('errors');
+    expect(Object.keys(equipmentEmptyName)).to.contain('properties');
+    expect(equipmentMissingName.errors.length).to.equal(1);
+    expect(equipmentMissingName.errors[0]).to.equal('Name cannot be blank');
+    expect(equipmentEmptyName.errors.length).to.equal(1);
+    expect(equipmentEmptyName.errors[0]).to.equal('Name cannot be blank');
+  })
+
+  it('update returns errors when no name is supplied', async () => {
+    const equipment = await Equipment.create({
+      name: 'Sewing Machine',
+      categoryIds: [],
+    })
+    const equipmentEmptyName = await Equipment.update({
+      ...equipment,
+      name: '',
+    })
+    expect(Object.keys(equipmentEmptyName)).to.contain('errors');
+    expect(Object.keys(equipmentEmptyName)).to.contain('properties');
+    expect(equipmentEmptyName.errors.length).to.equal(1);
+    expect(equipmentEmptyName.errors[0]).to.equal('Name cannot be blank');
+  })
 });

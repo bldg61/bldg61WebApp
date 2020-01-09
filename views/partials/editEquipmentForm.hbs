@@ -2,14 +2,11 @@
   <div class="modal-content">
     <h4>Edit Equipment</h4>
     <form class="col s12" action="/equipments/{{id}}" method="post">
-      {{#if ../errors}}
-      <div class="">
-        HERE
-      </div>
-      {{/if}}
+      {{#if errors}}
       <div class="row">
         <div id="equipmentError-{{id}}" class="col s12 pink-text"></div>
       </div>
+      {{/if}}
       <div class="row">
         <div class="input-field col s12">
           <input

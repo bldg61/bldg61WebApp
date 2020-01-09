@@ -59,7 +59,7 @@
   </div>
   {{> newEquipmentForm}}
   {{#each equipments}}
-    {{> editEquipmentForm allCategories=../categories}}
+    {{> editEquipmentForm errors=../errors allCategories=../categories}}
     {{> deleteEquipmentAlert}}
   {{/each}}
 </div>
