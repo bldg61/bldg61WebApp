@@ -3,5 +3,4 @@ document.addEventListener('DOMContentLoaded', function() {
   M.Tabs.init(tabs, {});
   const modals = document.querySelectorAll('.modal');
   M.Modal.init(modals, {});
-  document.materializeJSLoaded = true
 });
