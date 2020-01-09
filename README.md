@@ -30,7 +30,7 @@ Mrrrrbe todos:
         ```
         MIGRATE_TO=20191223035122 yarn db:migrate
         ```
-1. `yarn start`, or install nodemon locally and :sparkles: `nodemon start` :sparkles: (watches file changes and restarts server)
+1. `yarn start`, or install nodemon locally and :sparkles: `nodemon start` :sparkles: (watches SERVER file changes and restarts server... manual restart and browser refresh still required most of the time for view changes)
 1. To add admin users:
     ```
     -> DATABASE_URL=postgres://localhost/bldg61_development node
@@ -44,7 +44,21 @@ Mrrrrbe todos:
     ```
     This will return a pending promise, but a user will have been created in the database.
 
-### Checking out the running server on other devices (must be on same wifi)
+### Deployed app setup (Heroku)
+* running migrations:
+
+    ```sh
+    heroku run npm run db:migrate
+    ```
+
+    * [Heroku CLI tools must be installed](https://devcenter.heroku.com/articles/heroku-cli)
+* dropping into prod db (USE CAUTION, OBVO THIS IS A PROD DB!!!!!)
+
+    ```
+    heroku pg:psql
+    ```
+
+### Checking out the local running server on other devices (must be on same wifi)
 
 1. Get the running server computer's LOCAL ip address
     * Mac - Listed in System Preferences -> Network
