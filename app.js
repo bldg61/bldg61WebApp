@@ -1,21 +1,25 @@
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
 const express = require('express');
+const hbs = require('hbs');
 const logger = require('morgan');
 const path = require('path');
 const sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
 
 const adminRouter = require('./routes/admin');
+const equipmentsRouter = require('./routes/equipments');
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const signupCompilerRouter = require('./routes/signupCompiler');
+
 const verifyLoggedInUser = require('./lib/verifyLoggedInUser');
 
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -41,6 +45,7 @@ app.use('/login', loginRouter);
 app.use('/signupCompiler', signupCompilerRouter);
 app.use(verifyLoggedInUser);
 app.use('/admin', adminRouter);
+app.use('/equipments', equipmentsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

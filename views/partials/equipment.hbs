@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Equipment
+      <a
+        class="btn-floating btn-large waves-effect waves-light pink right modal-trigger"
+        id="addEquipment"
+        href="#newEquipmentForm"
+      >
+        <i class="material-icons">add</i>
+      </a>
+    </span>
+
+    {{#if equipments.length}}
+      <div class="row">
+        <div class="col s12">
+          <table id=equipmentAvailable>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Total Available For Checkout</th>
+                <th>Categories</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#each equipments}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{totalForCheckout}}</td>
+                <td>
+                  {{#each categories}}
+                  {{name}}
+                  {{/each}}
+                </td>
+                <td>
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#editEquipmentForm-{{id}}"
+                    id="editEquipment-{{id}}"
+                  >
+                    <i class="material-icons">edit</i>
+                  </a>
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#deleteEquipmentAlert-{{id}}"
+                    id="deleteEquipment-{{id}}"
+                  >
+                    <i class="material-icons">delete</i>
+                  </a>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{> newEquipmentForm}}
+  {{#each equipments}}
+    {{> editEquipmentForm errors=../errors allCategories=../categories}}
+    {{> deleteEquipmentAlert}}
+  {{/each}}
+</div>
