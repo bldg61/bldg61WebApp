@@ -1,0 +1,33 @@
+<div id="newCategoryForm" class="modal">
+  <div class="modal-content">
+    <h4>New Category</h4>
+    <form
+      action="/categories"
+      class="col s12"
+      method="post"
+    >
+      {{# if errors}}
+      <div class="row">
+        <div id="categoryError" class="col s12 pink-text"></div>
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="categoryName" name="name" type="text">
+          <label for="name">Name</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
+        <button
+          class="modal-close btn waves-effect waves-light"
+          id="createCategory"
+          name="action"
+          type="submit"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

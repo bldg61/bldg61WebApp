@@ -1,0 +1,33 @@
+<div id="editCategoryForm-{{id}}" class="modal">
+  <div class="modal-content">
+    <h4>Edit Category</h4>
+    <form class="col s12" action="/categories/{{id}}" method="post">
+      {{#if errors}}
+      <div class="row">
+        <div id="categoryError-{{id}}" class="col s12 pink-text"></div>
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            id="categoryName-{{id}}"
+            name="name"
+            type="text"
+            value="{{name}}"
+          />
+          <label for="name">Name</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
+        <button
+          class="modal-close btn waves-effect waves-light"
+          id="submitEditCategory-{{id}}"
+          type="submit" name="action"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

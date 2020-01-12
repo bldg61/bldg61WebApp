@@ -1,0 +1,29 @@
+<div id="deleteCategoryAlert-{{id}}" class="modal">
+  <div class="modal-content">
+    <!-- DO WE NEED A FORM ACTION AND BUTTON ACTION? check equipment delete too -->
+    <form
+      action="/categories/{{id}}/delete"
+      class="col s21"
+      method="post"
+    >
+      <h4>
+        Are you sure you want to delete the category named {{name}}?
+      </h4>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">
+          Cancel
+        </a>
+        <button
+          class="modal-close btn waves-effect waves-light"
+          href="/categories/{{id}}/delete"
+          id="submitDeleteCategory-{{id}}"
+          method="post"
+          name="action"
+          type="submit"
+        >
+          Delete
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

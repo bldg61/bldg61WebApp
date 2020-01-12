@@ -8,6 +8,7 @@ const sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
 
 const adminRouter = require('./routes/admin');
+const categoriesRouter = require('./routes/categories');
 const equipmentsRouter = require('./routes/equipments');
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -45,6 +46,7 @@ app.use('/login', loginRouter);
 app.use('/signupCompiler', signupCompilerRouter);
 app.use(verifyLoggedInUser);
 app.use('/admin', adminRouter);
+app.use('/categories', categoriesRouter);
 app.use('/equipments', equipmentsRouter);
 
 // catch 404 and forward to error handler
