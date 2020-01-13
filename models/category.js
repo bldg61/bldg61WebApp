@@ -89,6 +89,12 @@ exports.update = async newProperties => {
 
 async function validate(properties) {
   const errors = [];
+
+  if (!properties.name || properties.name === '') {
+    const error = 'Name cannot be blank';
+    errors.push(error);
+  }
+
   const existingCategory = await exports.findByName(properties.name);
   if (existingCategory) {
     const error = 'Name already taken';
