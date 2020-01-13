@@ -1,12 +1,12 @@
-<div id="deleteEquipmentAlert-{{id}}" class="modal">
+<div id="deleteCategoryAlert-{{id}}" class="modal">
   <div class="modal-content">
     <form
-      action="/equipments/{{id}}/delete"
+      action="/categories/{{id}}/delete"
       class="col s21"
       method="post"
     >
       <h4>
-        Are you sure you want to delete the {{totalForCheckout}} items named {{name}}?
+        Are you sure you want to delete the category named {{name}}?
       </h4>
       <div class="modal-footer">
         <a class="modal-close btn waves-effect waves-light pink">
@@ -14,7 +14,7 @@
         </a>
         <button
           class="modal-close btn waves-effect waves-light"
-          id="submitDeleteEquipment-{{id}}"
+          id="submitDeleteCategory-{{id}}"
           type="submit"
         >
           Delete
