@@ -7,7 +7,7 @@ const toolsController = require('../../controllers/tools');
 const Category = require('../../models/category');
 const Tool = require('../../models/tool');
 
-describe('Tool Controller', async () => {
+describe('Tools Controller', async () => {
   it('creates categorizations with undefined, string, or array of categories', async () => {
     const category1 = await Category.create({ name: 'sewing' });
     const category2 = await Category.create({ name: 'electronics' });

@@ -5,17 +5,17 @@ const sortByObjectName = require('../lib/sortByObjectName');
 exports.all = async () => {
   const tools = (await query(
     `SELECT
-      equipments."id",
-      equipments."name",
-      equipments."totalForCheckout",
-      equipments."createdAt",
-      equipments."updatedAt",
+      tools."id",
+      tools."name",
+      tools."totalForCheckout",
+      tools."createdAt",
+      tools."updatedAt",
       ARRAY(
         SELECT json_build_object('id', categories.id, 'name', categories.name)
         FROM categorizations, categories
           WHERE categories.id = categorizations."categoryId"
-          AND equipments.id = categorizations."equipmentId") as categories
-    FROM equipments`,
+          AND tools.id = categorizations."toolId") as categories
+    FROM tools`,
   )).rows;
 
   return tools.sort(sortByObjectName);
@@ -28,7 +28,7 @@ exports.create = async properties => {
   }
 
   const createdTool = (await query(
-    `INSERT INTO "equipments"(
+    `INSERT INTO "tools"(
       "name",
       "totalForCheckout"
     ) values ($1, $2) returning *`,
@@ -42,7 +42,7 @@ exports.create = async properties => {
     await query(
       `INSERT INTO "categorizations"(
         "categoryId",
-        "equipmentId"
+        "toolId"
       ) values ($1, $2) returning *`,
       [
         categoryId,
@@ -66,14 +66,14 @@ exports.create = async properties => {
 exports.delete = async id => {
   await query(
     `DELETE FROM "categorizations"
-      WHERE "equipmentId" = $1
+      WHERE "toolId" = $1
     returning *`,
     [
       id,
     ],
   );
   await query(
-    `DELETE FROM "equipments"
+    `DELETE FROM "tools"
       WHERE "id" = $1
     returning *`,
     [
@@ -85,7 +85,7 @@ exports.delete = async id => {
 
 exports.find = async id => {
   const tool = (await query(
-    'SELECT * FROM "equipments" WHERE "id" = $1 LIMIT 1',
+    'SELECT * FROM "tools" WHERE "id" = $1 LIMIT 1',
     [
       id,
     ],
@@ -96,17 +96,17 @@ exports.find = async id => {
 exports.findByName = async name => {
   const category = (await query(
     `SELECT
-      equipments."id",
-      equipments."name",
-      equipments."totalForCheckout",
-      equipments."createdAt",
-      equipments."updatedAt",
+      tools."id",
+      tools."name",
+      tools."totalForCheckout",
+      tools."createdAt",
+      tools."updatedAt",
       ARRAY(
         SELECT json_build_object('id', categories.id, 'name', categories.name)
         FROM categorizations, categories
           WHERE categories.id = categorizations."categoryId"
-          AND equipments.id = categorizations."equipmentId") as categories
-    FROM equipments WHERE "name"=$1`,
+          AND tools.id = categorizations."toolId") as categories
+    FROM tools WHERE "name"=$1`,
     [
       name,
     ],
@@ -124,7 +124,7 @@ exports.update = async newProperties => {
   }
 
   const updatedTool = (await query(
-    `UPDATE "equipments" SET
+    `UPDATE "tools" SET
     "name"=$1,
     "totalForCheckout"=$2 WHERE id=$3 RETURNING *`,
     [
@@ -139,7 +139,7 @@ exports.update = async newProperties => {
       categories.id,
       categories.name
     FROM categorizations, categories
-    WHERE categorizations."equipmentId" = ($1)
+    WHERE categorizations."toolId" = ($1)
     AND categorizations."categoryId" = categories.id;`,
     [
       properties.id,
@@ -159,7 +159,7 @@ exports.update = async newProperties => {
     await query(
       `INSERT INTO "categorizations"(
         "categoryId",
-        "equipmentId"
+        "toolId"
       ) values ($1, $2) returning *`,
       [
         categoryId,
@@ -172,7 +172,7 @@ exports.update = async newProperties => {
     await query(
       `DELETE FROM "categorizations"
         WHERE "categoryId" = $1
-        AND "equipmentId" = $2
+        AND "toolId" = $2
       returning *`,
       [
         categoryId,
@@ -186,7 +186,7 @@ exports.update = async newProperties => {
       categories.id,
       categories.name
     FROM categorizations, categories
-    WHERE categorizations."equipmentId" = ($1)
+    WHERE categorizations."toolId" = ($1)
     AND categorizations."categoryId" = categories.id;`,
     [
       properties.id,
