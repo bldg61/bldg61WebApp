@@ -49,9 +49,9 @@
       </div>
     {{/if}}
   </div>
-  {{> newCategoryForm}}
+  {{> categories/new}}
   {{#each categories}}
-    {{> editCategoryForm errors=../errors}}
-    {{> deleteCategoryAlert}}
+    {{> categories/edit errors=../errors}}
+    {{> categories/delete}}
   {{/each}}
 </div>
