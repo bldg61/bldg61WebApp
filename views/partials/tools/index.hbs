@@ -1,42 +1,50 @@
 <div class="card">
   <div class="card-content">
-    <span class="card-title">Categories
+    <span class="card-title">Tools
       <a
         class="btn-floating btn-large waves-effect waves-light pink right modal-trigger"
-        id="addCategory"
-        href="#newCategoryForm"
+        id="addTool"
+        href="#newToolForm"
       >
         <i class="material-icons">add</i>
       </a>
     </span>
 
-    {{#if categories.length}}
+    {{#if tools.length}}
       <div class="row">
         <div class="col s12">
-          <table id=categoriesAvailable>
+          <table id=toolsAvailable>
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Total Available For Checkout</th>
+                <th>Categories</th>
                 <th></th>
               </tr>
             </thead>
 
             <tbody>
-              {{#each categories}}
+              {{#each tools}}
               <tr>
                 <td>{{name}}</td>
+                <td>{{totalForCheckout}}</td>
+                <td>
+                  {{#each categories}}
+                  {{name}}
+                  {{/each}}
+                </td>
                 <td class="right">
                   <a
                     class="waves-effect waves-light btn modal-trigger"
-                    href="#editCategoryForm-{{id}}"
-                    id="editCategory-{{id}}"
+                    href="#editToolForm-{{id}}"
+                    id="editTool-{{id}}"
                   >
                     <i class="material-icons">edit</i>
                   </a>
                   <a
                     class="waves-effect waves-light btn modal-trigger"
-                    href="#deleteCategoryAlert-{{id}}"
-                    id="deleteCategory-{{id}}"
+                    href="#deleteToolAlert-{{id}}"
+                    id="deleteTool-{{id}}"
                   >
                     <i class="material-icons">delete</i>
                   </a>
@@ -49,9 +57,9 @@
       </div>
     {{/if}}
   </div>
-  {{> newCategoryForm}}
-  {{#each categories}}
-    {{> editCategoryForm errors=../errors}}
-    {{> deleteCategoryAlert}}
+  {{> tools/new}}
+  {{#each tools}}
+    {{> tools/edit errors=../errors allCategories=../categories}}
+    {{> tools/delete}}
   {{/each}}
 </div>

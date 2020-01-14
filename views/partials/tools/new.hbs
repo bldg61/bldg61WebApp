@@ -1,14 +1,14 @@
-<div id="newEquipmentForm" class="modal">
+<div id="newToolForm" class="modal">
   <div class="modal-content">
-    <h4>New Equipment</h4>
+    <h4>New Tool</h4>
     <form
-      action="/equipments"
+      action="/tools"
       class="col s12"
       method="post"
     >
       {{# if errors}}
       <div class="row">
-        <div id="equipmentError" class="col s12 pink-text"></div>
+        <div id="toolError" class="col s12 pink-text"></div>
       </div>
       {{/if}}
       <div class="row">
@@ -39,7 +39,7 @@
         <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
         <button
           class="modal-close btn waves-effect waves-light"
-          id="createEquipment"
+          id="createTool"
           name="action"
           type="submit"
         >

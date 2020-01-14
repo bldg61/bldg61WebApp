@@ -1,10 +1,10 @@
-<div id="editEquipmentForm-{{id}}" class="modal">
+<div id="editToolForm-{{id}}" class="modal">
   <div class="modal-content">
-    <h4>Edit Equipment</h4>
-    <form class="col s12" action="/equipments/{{id}}" method="post">
+    <h4>Edit Tool</h4>
+    <form class="col s12" action="/tools/{{id}}" method="post">
       {{#if errors}}
       <div class="row">
-        <div id="equipmentError-{{id}}" class="col s12 pink-text"></div>
+        <div id="toolError-{{id}}" class="col s12 pink-text"></div>
       </div>
       {{/if}}
       <div class="row">
@@ -34,7 +34,7 @@
           {{#each allCategories}}
             <p>
               <label for="editCategoryIds{{...id}}-{{id}}">
-                {{#if (equipmentCategory id ...categories)}}
+                {{#if (toolCategory id ...categories)}}
                   <input
                     checked
                     id="editCategoryIds{{...id}}-{{id}}"
@@ -60,7 +60,7 @@
         <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
         <button
           class="modal-close btn waves-effect waves-light"
-          id="submitEditEquipment-{{id}}"
+          id="submitEditTool-{{id}}"
           type="submit" name="action"
         >
           Update

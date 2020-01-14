@@ -3,22 +3,22 @@ const { query } = require('../db/index');
 const sortByObjectName = require('../lib/sortByObjectName');
 
 exports.all = async () => {
-  const equipments = (await query(
+  const tools = (await query(
     `SELECT
-      equipments."id",
-      equipments."name",
-      equipments."totalForCheckout",
-      equipments."createdAt",
-      equipments."updatedAt",
+      tools."id",
+      tools."name",
+      tools."totalForCheckout",
+      tools."createdAt",
+      tools."updatedAt",
       ARRAY(
         SELECT json_build_object('id', categories.id, 'name', categories.name)
         FROM categorizations, categories
           WHERE categories.id = categorizations."categoryId"
-          AND equipments.id = categorizations."equipmentId") as categories
-    FROM equipments`,
+          AND tools.id = categorizations."toolId") as categories
+    FROM tools`,
   )).rows;
 
-  return equipments.sort(sortByObjectName);
+  return tools.sort(sortByObjectName);
 };
 
 exports.create = async properties => {
@@ -27,8 +27,8 @@ exports.create = async properties => {
     return { errors, properties };
   }
 
-  const createdEquipment = (await query(
-    `INSERT INTO "equipments"(
+  const createdTool = (await query(
+    `INSERT INTO "tools"(
       "name",
       "totalForCheckout"
     ) values ($1, $2) returning *`,
@@ -42,11 +42,11 @@ exports.create = async properties => {
     await query(
       `INSERT INTO "categorizations"(
         "categoryId",
-        "equipmentId"
+        "toolId"
       ) values ($1, $2) returning *`,
       [
         categoryId,
-        createdEquipment.id,
+        createdTool.id,
       ],
     );
     const category = (await query(
@@ -59,21 +59,21 @@ exports.create = async properties => {
   });
 
   return Promise.all(promisedCategories).then(categories => {
-    return { ...createdEquipment, categories };
+    return { ...createdTool, categories };
   });
 };
 
 exports.delete = async id => {
   await query(
     `DELETE FROM "categorizations"
-      WHERE "equipmentId" = $1
+      WHERE "toolId" = $1
     returning *`,
     [
       id,
     ],
   );
   await query(
-    `DELETE FROM "equipments"
+    `DELETE FROM "tools"
       WHERE "id" = $1
     returning *`,
     [
@@ -84,29 +84,29 @@ exports.delete = async id => {
 };
 
 exports.find = async id => {
-  const equipment = (await query(
-    'SELECT * FROM "equipments" WHERE "id" = $1 LIMIT 1',
+  const tool = (await query(
+    'SELECT * FROM "tools" WHERE "id" = $1 LIMIT 1',
     [
       id,
     ],
   )).rows[0];
-  return equipment;
+  return tool;
 };
 
 exports.findByName = async name => {
   const category = (await query(
     `SELECT
-      equipments."id",
-      equipments."name",
-      equipments."totalForCheckout",
-      equipments."createdAt",
-      equipments."updatedAt",
+      tools."id",
+      tools."name",
+      tools."totalForCheckout",
+      tools."createdAt",
+      tools."updatedAt",
       ARRAY(
         SELECT json_build_object('id', categories.id, 'name', categories.name)
         FROM categorizations, categories
           WHERE categories.id = categorizations."categoryId"
-          AND equipments.id = categorizations."equipmentId") as categories
-    FROM equipments WHERE "name"=$1`,
+          AND tools.id = categorizations."toolId") as categories
+    FROM tools WHERE "name"=$1`,
     [
       name,
     ],
@@ -123,8 +123,8 @@ exports.update = async newProperties => {
     return { errors, properties };
   }
 
-  const updatedEquipment = (await query(
-    `UPDATE "equipments" SET
+  const updatedTool = (await query(
+    `UPDATE "tools" SET
     "name"=$1,
     "totalForCheckout"=$2 WHERE id=$3 RETURNING *`,
     [
@@ -139,7 +139,7 @@ exports.update = async newProperties => {
       categories.id,
       categories.name
     FROM categorizations, categories
-    WHERE categorizations."equipmentId" = ($1)
+    WHERE categorizations."toolId" = ($1)
     AND categorizations."categoryId" = categories.id;`,
     [
       properties.id,
@@ -159,7 +159,7 @@ exports.update = async newProperties => {
     await query(
       `INSERT INTO "categorizations"(
         "categoryId",
-        "equipmentId"
+        "toolId"
       ) values ($1, $2) returning *`,
       [
         categoryId,
@@ -172,7 +172,7 @@ exports.update = async newProperties => {
     await query(
       `DELETE FROM "categorizations"
         WHERE "categoryId" = $1
-        AND "equipmentId" = $2
+        AND "toolId" = $2
       returning *`,
       [
         categoryId,
@@ -186,14 +186,14 @@ exports.update = async newProperties => {
       categories.id,
       categories.name
     FROM categorizations, categories
-    WHERE categorizations."equipmentId" = ($1)
+    WHERE categorizations."toolId" = ($1)
     AND categorizations."categoryId" = categories.id;`,
     [
       properties.id,
     ],
   )).rows;
 
-  return { ...updatedEquipment, categories };
+  return { ...updatedTool, categories };
 };
 
 async function validate(properties) {
@@ -203,10 +203,10 @@ async function validate(properties) {
     errors.push(error);
   }
 
-  const existingEquipmentName = await exports.findByName(properties.name);
-  const forDifferentEquipment = existingEquipmentName
-    ? existingEquipmentName.id !== Number(properties.id) : false;
-  if (existingEquipmentName && forDifferentEquipment) {
+  const existingToolName = await exports.findByName(properties.name);
+  const forDifferentTool = existingToolName
+    ? existingToolName.id !== Number(properties.id) : false;
+  if (existingToolName && forDifferentTool) {
     const error = 'Name already taken';
     errors.push(error);
   }

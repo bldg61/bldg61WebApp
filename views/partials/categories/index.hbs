@@ -1,50 +1,42 @@
 <div class="card">
   <div class="card-content">
-    <span class="card-title">Equipment
+    <span class="card-title">Categories
       <a
         class="btn-floating btn-large waves-effect waves-light pink right modal-trigger"
-        id="addEquipment"
-        href="#newEquipmentForm"
+        id="addCategory"
+        href="#newCategoryForm"
       >
         <i class="material-icons">add</i>
       </a>
     </span>
 
-    {{#if equipments.length}}
+    {{#if categories.length}}
       <div class="row">
         <div class="col s12">
-          <table id=equipmentAvailable>
+          <table id=categoriesAvailable>
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Total Available For Checkout</th>
-                <th>Categories</th>
                 <th></th>
               </tr>
             </thead>
 
             <tbody>
-              {{#each equipments}}
+              {{#each categories}}
               <tr>
                 <td>{{name}}</td>
-                <td>{{totalForCheckout}}</td>
-                <td>
-                  {{#each categories}}
-                  {{name}}
-                  {{/each}}
-                </td>
                 <td class="right">
                   <a
                     class="waves-effect waves-light btn modal-trigger"
-                    href="#editEquipmentForm-{{id}}"
-                    id="editEquipment-{{id}}"
+                    href="#editCategoryForm-{{id}}"
+                    id="editCategory-{{id}}"
                   >
                     <i class="material-icons">edit</i>
                   </a>
                   <a
                     class="waves-effect waves-light btn modal-trigger"
-                    href="#deleteEquipmentAlert-{{id}}"
-                    id="deleteEquipment-{{id}}"
+                    href="#deleteCategoryAlert-{{id}}"
+                    id="deleteCategory-{{id}}"
                   >
                     <i class="material-icons">delete</i>
                   </a>
@@ -57,9 +49,9 @@
       </div>
     {{/if}}
   </div>
-  {{> newEquipmentForm}}
-  {{#each equipments}}
-    {{> editEquipmentForm errors=../errors allCategories=../categories}}
-    {{> deleteEquipmentAlert}}
+  {{> categories/new}}
+  {{#each categories}}
+    {{> categories/edit errors=../errors}}
+    {{> categories/delete}}
   {{/each}}
 </div>

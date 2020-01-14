@@ -1,15 +1,15 @@
 const Category = require('../models/category');
-const Equipment = require('../models/equipment');
+const Tool = require('../models/tool');
 const User = require('../models/user');
 
 exports.index = async (req, res) => {
   const currentUser = await User.find(req.session.userId);
   const categories = await Category.all();
-  const equipments = await Equipment.all();
+  const tools = await Tool.all();
   const adminDashboardData = {
     categories,
     currentUser,
-    equipments,
+    tools,
   };
   if (req.session.errors) {
     const errors = { ...req.session.errors };

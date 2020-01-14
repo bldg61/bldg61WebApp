@@ -1,4 +1,4 @@
-const Equipment = require('../models/equipment');
+const Tool = require('../models/tool');
 
 exports.create = async (req, res, next) => {
   const categoryIds =
@@ -6,10 +6,10 @@ exports.create = async (req, res, next) => {
   : typeof req.body.categoryIds === 'string' ? [ req.body.categoryIds ]
   : [ ...req.body.categoryIds ];
 
-  const equipment = await Equipment.create({ ...req.body, categoryIds });
+  const tool = await Tool.create({ ...req.body, categoryIds });
 
-  if (equipment.errors) {
-    req.session.errors = { equipment };
+  if (tool.errors) {
+    req.session.errors = { tool };
     req.session.save(err => {
       if (err) return next(err);
       res.redirect('/admin');
@@ -21,16 +21,16 @@ exports.create = async (req, res, next) => {
 
 exports.delete = async (req, res) => {
   const { id } = req.params;
-  await Equipment.delete(id);
+  await Tool.delete(id);
   return res.redirect('/admin');
 };
 
 exports.update = async (req, res, next) => {
   const { id } = req.params;
-  const equipment = await Equipment.update({ ...req.body, id });
+  const tool = await Tool.update({ ...req.body, id });
 
-  if (equipment.errors) {
-    req.session.errors = { equipment };
+  if (tool.errors) {
+    req.session.errors = { tool };
     req.session.save(err => {
       if (err) return next(err);
       res.redirect('/admin');
