@@ -6,8 +6,8 @@ const router = express.Router();
 const adminController = require('../controllers/admin');
 
 hbs.registerHelper({
-  equipmentCategory: (categoryIdToCheck, equipmentCategories) => {
-    return equipmentCategories.some(category => {
+  toolCategory: (categoryIdToCheck, toolCategories) => {
+    return toolCategories.some(category => {
       return category.id === categoryIdToCheck;
     });
   },

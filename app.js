@@ -9,7 +9,7 @@ const session = require('express-session');
 
 const adminRouter = require('./routes/admin');
 const categoriesRouter = require('./routes/categories');
-const equipmentsRouter = require('./routes/equipments');
+const toolsRouter = require('./routes/tools');
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const signupCompilerRouter = require('./routes/signupCompiler');
@@ -47,7 +47,7 @@ app.use('/signupCompiler', signupCompilerRouter);
 app.use(verifyLoggedInUser);
 app.use('/admin', adminRouter);
 app.use('/categories', categoriesRouter);
-app.use('/equipments', equipmentsRouter);
+app.use('/tools', toolsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

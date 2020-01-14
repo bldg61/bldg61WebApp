@@ -3,7 +3,7 @@ const { query } = require('../db/index');
 const sortByObjectName = require('../lib/sortByObjectName');
 
 exports.all = async () => {
-  const equipments = (await query(
+  const tools = (await query(
     `SELECT
       equipments."id",
       equipments."name",
@@ -18,7 +18,7 @@ exports.all = async () => {
     FROM equipments`,
   )).rows;
 
-  return equipments.sort(sortByObjectName);
+  return tools.sort(sortByObjectName);
 };
 
 exports.create = async properties => {
@@ -27,7 +27,7 @@ exports.create = async properties => {
     return { errors, properties };
   }
 
-  const createdEquipment = (await query(
+  const createdTool = (await query(
     `INSERT INTO "equipments"(
       "name",
       "totalForCheckout"
@@ -46,7 +46,7 @@ exports.create = async properties => {
       ) values ($1, $2) returning *`,
       [
         categoryId,
-        createdEquipment.id,
+        createdTool.id,
       ],
     );
     const category = (await query(
@@ -59,7 +59,7 @@ exports.create = async properties => {
   });
 
   return Promise.all(promisedCategories).then(categories => {
-    return { ...createdEquipment, categories };
+    return { ...createdTool, categories };
   });
 };
 
@@ -84,13 +84,13 @@ exports.delete = async id => {
 };
 
 exports.find = async id => {
-  const equipment = (await query(
+  const tool = (await query(
     'SELECT * FROM "equipments" WHERE "id" = $1 LIMIT 1',
     [
       id,
     ],
   )).rows[0];
-  return equipment;
+  return tool;
 };
 
 exports.findByName = async name => {
@@ -123,7 +123,7 @@ exports.update = async newProperties => {
     return { errors, properties };
   }
 
-  const updatedEquipment = (await query(
+  const updatedTool = (await query(
     `UPDATE "equipments" SET
     "name"=$1,
     "totalForCheckout"=$2 WHERE id=$3 RETURNING *`,
@@ -193,7 +193,7 @@ exports.update = async newProperties => {
     ],
   )).rows;
 
-  return { ...updatedEquipment, categories };
+  return { ...updatedTool, categories };
 };
 
 async function validate(properties) {
@@ -203,10 +203,10 @@ async function validate(properties) {
     errors.push(error);
   }
 
-  const existingEquipmentName = await exports.findByName(properties.name);
-  const forDifferentEquipment = existingEquipmentName
-    ? existingEquipmentName.id !== Number(properties.id) : false;
-  if (existingEquipmentName && forDifferentEquipment) {
+  const existingToolName = await exports.findByName(properties.name);
+  const forDifferentTool = existingToolName
+    ? existingToolName.id !== Number(properties.id) : false;
+  if (existingToolName && forDifferentTool) {
     const error = 'Name already taken';
     errors.push(error);
   }

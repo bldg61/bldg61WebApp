@@ -3,73 +3,73 @@ const { expect } = require('chai');
 require('../helpers/testSetup');
 
 const Category = require('../../models/category');
-const Equipment = require('../../models/equipment');
+const Tool = require('../../models/tool');
 
-describe('Equipment', async () => {
-  it('all must return all created equipment with associated categories', async () => {
+describe('Tool', async () => {
+  it('all must return all created tools with associated categories', async () => {
     const category = await Category.create({ name: 'sewing' });
-    await Equipment.create({
+    await Tool.create({
       name: 'sewing awl',
       totalForCheckout: 3,
       categoryIds: [category.id],
     });
 
-    const allEquipment = await Equipment.all();
-    expect(allEquipment.length).to.equal(1);
-    expect(Object.keys(allEquipment[0])).to.contain('id');
-    expect(Object.keys(allEquipment[0])).to.contain('name');
-    expect(Object.keys(allEquipment[0])).to.contain('totalForCheckout');
-    expect(Object.keys(allEquipment[0])).to.contain('createdAt');
-    expect(Object.keys(allEquipment[0])).to.contain('updatedAt');
-    expect(Object.keys(allEquipment[0])).to.contain('categories');
+    const tools = await Tool.all();
+    expect(tools.length).to.equal(1);
+    expect(Object.keys(tools[0])).to.contain('id');
+    expect(Object.keys(tools[0])).to.contain('name');
+    expect(Object.keys(tools[0])).to.contain('totalForCheckout');
+    expect(Object.keys(tools[0])).to.contain('createdAt');
+    expect(Object.keys(tools[0])).to.contain('updatedAt');
+    expect(Object.keys(tools[0])).to.contain('categories');
 
-    expect(allEquipment[0].categories.length).to.equal(1);
-    expect(Object.keys(allEquipment[0].categories[0])).to.contain('id');
-    expect(allEquipment[0].categories[0].name).to.equal('sewing');
+    expect(tools[0].categories.length).to.equal(1);
+    expect(Object.keys(tools[0].categories[0])).to.contain('id');
+    expect(tools[0].categories[0].name).to.equal('sewing');
   });
 
   it('create defaults totalForCheckout to zero', async () => {
-    const equipmentEmptyTFC = await Equipment.create({
+    const toolEmptyTFC = await Tool.create({
       name: 'sewing awl',
       totalForCheckout: '',
       categoryIds: [],
     });
-    const equipmentMissingTFC = await Equipment.create({
+    const toolMissingTFC = await Tool.create({
       name: 'ironing board',
       categoryIds: [],
     });
 
-    expect(equipmentEmptyTFC.totalForCheckout).to.equal(0);
-    expect(equipmentMissingTFC.totalForCheckout).to.equal(0);
+    expect(toolEmptyTFC.totalForCheckout).to.equal(0);
+    expect(toolMissingTFC.totalForCheckout).to.equal(0);
   });
 
   it('create returns errors when no name is supplied', async () => {
-    const equipmentMissingName = await Equipment.create({ });
-    const equipmentEmptyName = await Equipment.create({
+    const toolMissingName = await Tool.create({ });
+    const toolEmptyName = await Tool.create({
       name: '',
     });
-    expect(Object.keys(equipmentMissingName)).to.contain('errors');
-    expect(Object.keys(equipmentMissingName)).to.contain('properties');
-    expect(Object.keys(equipmentEmptyName)).to.contain('errors');
-    expect(Object.keys(equipmentEmptyName)).to.contain('properties');
-    expect(equipmentMissingName.errors.length).to.equal(1);
-    expect(equipmentMissingName.errors[0]).to.equal('Name cannot be blank');
-    expect(equipmentEmptyName.errors.length).to.equal(1);
-    expect(equipmentEmptyName.errors[0]).to.equal('Name cannot be blank');
+    expect(Object.keys(toolMissingName)).to.contain('errors');
+    expect(Object.keys(toolMissingName)).to.contain('properties');
+    expect(Object.keys(toolEmptyName)).to.contain('errors');
+    expect(Object.keys(toolEmptyName)).to.contain('properties');
+    expect(toolMissingName.errors.length).to.equal(1);
+    expect(toolMissingName.errors[0]).to.equal('Name cannot be blank');
+    expect(toolEmptyName.errors.length).to.equal(1);
+    expect(toolEmptyName.errors[0]).to.equal('Name cannot be blank');
   });
 
   it('update returns errors when no name is supplied', async () => {
-    const equipment = await Equipment.create({
+    const tool = await Tool.create({
       name: 'Sewing Machine',
       categoryIds: [],
     });
-    const equipmentEmptyName = await Equipment.update({
-      ...equipment,
+    const toolEmptyName = await Tool.update({
+      ...tool,
       name: '',
     });
-    expect(Object.keys(equipmentEmptyName)).to.contain('errors');
-    expect(Object.keys(equipmentEmptyName)).to.contain('properties');
-    expect(equipmentEmptyName.errors.length).to.equal(1);
-    expect(equipmentEmptyName.errors[0]).to.equal('Name cannot be blank');
+    expect(Object.keys(toolEmptyName)).to.contain('errors');
+    expect(Object.keys(toolEmptyName)).to.contain('properties');
+    expect(toolEmptyName.errors.length).to.equal(1);
+    expect(toolEmptyName.errors[0]).to.equal('Name cannot be blank');
   });
 });
