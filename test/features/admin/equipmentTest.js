@@ -48,9 +48,9 @@ describe('Admin path', async () => {
         expect(text).to.not.contain(category4.name);
       });
       await driver.findElement(By.id('addTool')).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('name'))), 6000);
-      await driver.findElement(By.id('name')).sendKeys('Soldering Iron');
-      await driver.findElement(By.id('totalForCheckout')).sendKeys('1');
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolName'))), 6000);
+      await driver.findElement(By.id('toolName')).sendKeys('Soldering Iron');
+      await driver.findElement(By.id('toolTotalForCheckout')).sendKeys('1');
       await driver.findElement(By.id(`categoryIds-checkbox-${category4.id}`)).click();
       await driver.findElement(By.id('createTool')).click();
 
@@ -62,7 +62,7 @@ describe('Admin path', async () => {
 
       const solderingIron = await Tool.findByName('Soldering Iron');
       await driver.findElement(By.id(`editTool-${solderingIron.id}`)).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`name-${solderingIron.id}`))), 6000);
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`toolName-${solderingIron.id}`))), 6000);
       await driver.findElement(By.id(`editCategoryIdsCheckbox${solderingIron.id}-${category4.id}`)).click();
       await driver.findElement(By.id(`submitEditTool-${solderingIron.id}`)).click();
 
