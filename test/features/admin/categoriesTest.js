@@ -8,7 +8,7 @@ const Tool = require('../../../models/tool'); // is this being used?
 const User = require('../../../models/user');
 
 describe('Admin path', async () => {
-  it('allows admins to see list, create, update, delete categories', async () => {
+  it('allows admins to list, create, update, delete categories', async () => {
     const driver = await new Builder().forBrowser('chrome').build();
     try {
       const user = await User.create({
