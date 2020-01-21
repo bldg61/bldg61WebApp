@@ -3,6 +3,7 @@ const { query } = require('../db/index');
 exports.all = async () => {
   const checkouts = (await query(
     `SELECT
+      checkouts.id,
       checkouts."patronName",
       checkouts."patronContact",
       checkouts."dueDate",
@@ -37,8 +38,82 @@ exports.create = async properties => {
   return createdCheckout;
 };
 
+exports.delete = async id => {
+  await query(
+    `DELETE FROM "checkouts"
+      WHERE "id" = $1
+    returning *`,
+    [
+      id,
+    ],
+  );
+  return {};
+};
+
+exports.find = async id => {
+  const checkout = (await query(
+    'SELECT * FROM "checkouts" WHERE "id" = $1 LIMIT 1',
+    [
+      id,
+    ],
+  )).rows[0];
+  return checkout;
+};
+
+exports.update = async newProperties => {
+  const oldProps = await this.find(newProperties.id);
+  const properties = { ...oldProps, ...newProperties };
+
+  const errors = await validate(properties);
+  if (errors) {
+    return { errors, properties };
+  }
+
+  const updatedCheckout = (await query(
+    `UPDATE "checkouts" SET
+    "patronName"=$1,
+    "patronContact"=$2,
+    "dueDate"=$3,
+    "toolId"=$4 WHERE id=$5 RETURNING *`,
+    [
+      properties.patronName,
+      properties.patronContact,
+      properties.dueDate,
+      properties.toolId,
+      properties.id,
+    ],
+  )).rows[0];
+
+  return updatedCheckout;
+};
+
+exports.wherePatronContact = async patronContact => {
+  const checkout = (await query(
+    'SELECT * FROM "checkouts" WHERE "patronContact" = $1',
+    [
+      patronContact,
+    ],
+  )).rows[0];
+  return checkout;
+};
+
 async function validate(properties) {
   const errors = [];
+
+  if (!properties.patronName || properties.patronName === '') {
+    const error = 'Patron Name cannot be blank';
+    errors.push(error);
+  }
+
+  if (!properties.patronContact || properties.patronContact === '') {
+    const error = 'Patron Contact cannot be blank';
+    errors.push(error);
+  }
+
+  if (!properties.dueDate || properties.dueDate === '') {
+    const error = 'Due Date cannot be blank';
+    errors.push(error);
+  }
 
   if (errors.length > 0) {
     return errors;

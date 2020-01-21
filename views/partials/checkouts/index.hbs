@@ -55,4 +55,8 @@
     {{/if}}
   </div>
   {{> checkouts/new}}
+  {{#each checkouts}}
+    {{> checkouts/edit errors=../errors tools=../tools}}
+    {{> checkouts/delete}}
+  {{/each}}
 </div>

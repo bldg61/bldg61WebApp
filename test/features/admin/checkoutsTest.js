@@ -58,6 +58,29 @@ describe('Admin path', async () => {
         expect(text).to.contain('zack@example.com');
         expect(text).to.contain(tool.name);
       });
+
+      const zacksCheckout = await Checkout.wherePatronContact('zack@example.com');
+      await driver.findElement(By.id(`editCheckout-${zacksCheckout.id}`)).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`checkout-patronName-${zacksCheckout.id}`))), 6000);
+      await driver.findElement(By.id(`checkout-patronName-${zacksCheckout.id}`)).clear();
+      await driver.findElement(By.id(`checkout-patronName-${zacksCheckout.id}`)).sendKeys('Zack Bleevins');
+      await driver.findElement(By.id(`submitEditCheckout-${zacksCheckout.id}`)).click();
+
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('checkoutTabLink'))), 6000);
+      await driver.findElement(By.id('checkoutTabLink')).click();
+      await driver.findElement(By.id('checkoutsAvailable')).getText().then(text => {
+        expect(text).to.contain('Bleevins');
+      });
+
+      await driver.findElement(By.id(`deleteCheckout-${zacksCheckout.id}`)).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`submitDeleteCheckout-${zacksCheckout.id}`))), 6000);
+      await driver.findElement(By.id(`submitDeleteCheckout-${zacksCheckout.id}`)).click();
+
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('checkoutTabLink'))), 6000);
+      await driver.findElement(By.id('checkoutTabLink')).click();
+      await driver.findElement(By.id('checkoutTab')).getText().then(text => {
+        expect(text).to.not.contain('Bleevins');
+      });
     } finally {
       await driver.quit();
     }

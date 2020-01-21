@@ -1,26 +1,27 @@
-<div id="newCheckoutForm" class="modal">
+<div id="editCheckoutForm-{{id}}" class="modal">
   <div class="modal-content">
-    <h4>New Checkout</h4>
+    <h4>Edit Checkout</h4>
     <form
-      action="/checkouts"
+      action="/checkouts/{{id}}"
       class="col s12"
       method="post"
     >
-      {{# if errors}}
-      <div class="row">
-        <div
-          id="checkoutError"
-          class="col s12 pink-text"
-        >
+      {{#if errors}}
+        <div class="row">
+          <div
+            id="checkoutError-{{id}}"
+            class="col s12 pink-text"
+          >
+          </div>
         </div>
-      </div>
       {{/if}}
       <div class="row">
         <div class="input-field col s12">
           <input
-            id="checkout-patronName"
+            id="checkout-patronName-{{id}}"
             name="patronName"
             type="text"
+            value="{{patronName}}"
           />
           <label for="patronName">Patron Name</label>
         </div>
@@ -28,31 +29,38 @@
       <div class="row">
         <div class="input-field col s12">
           <input
-            id="checkout-patronContact"
+            id="checkout-patronContact-{{id}}"
             name="patronContact"
             type="text"
+            value="{{patronContact}}"
           />
           <label for="patronContact">Patron Contact</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <select id="checkout-toolId" name="toolId">
-            {{#if tools.length}}
-              <option id="checkout-toolId-0" value="" disabled selected>Tool for checkout</option>
-              {{#each tools}}
-                <option id="checkout-toolId-{{id}}" value="{{id}}">{{name}}</option>
-              {{/each}}
-            {{else}}
-              Oh dear we have no tools...
-            {{/if}}
+          <select id="checkout-{{id}}-toolId" name="toolId">
+            {{#each tools}}
+              <option
+                id="checkout-{{...id}}-toolId-{{id}}"
+                value="{{id}}"
+                {{isSelectedTool ...toolId id}}
+              >
+                {{name}}
+              </option>
+            {{/each}}
           </select>
           <label for="toolId">Tool</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="checkout-dueDate" name="dueDate" type="date" value={{todaysCheckoutDueDate}}>
+          <input
+            id="checkout-dueDate-{{id}}"
+            name="dueDate"
+            type="date"
+            value={{formFormattedDate dueDate}}
+          />
           <label for="dueDate">Due Date</label>
         </div>
       </div>
@@ -60,11 +68,10 @@
         <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
         <button
           class="modal-close btn waves-effect waves-light"
-          id="createCheckout"
-          name="action"
-          type="submit"
+          id="submitEditCheckout-{{id}}"
+          type="submit" name="action"
         >
-          Add
+          Update
         </button>
       </div>
     </form>

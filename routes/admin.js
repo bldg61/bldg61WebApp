@@ -11,13 +11,28 @@ hbs.registerHelper({
     const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(rawDate));
     return `${day}, ${date}`;
   },
+  formFormattedDate: date => {
+    return date.getUTCFullYear() +
+      '-' + pad(date.getUTCMonth() + 1) +
+      '-' + pad(date.getUTCDate())
+
+    function pad(number) {
+      if (number < 10) {
+        return '0' + number;
+      }
+      return number;
+    }
+  },
+  isSelectedTool: (toolId1, toolId2) => {
+    return toolId1 === toolId2;
+  },
+  jsonStringify: object => {
+    return JSON.stringify(object);
+  },
   toolCategory: (categoryIdToCheck, toolCategories) => {
     return toolCategories.some(category => {
       return category.id === categoryIdToCheck;
     });
-  },
-  jsonStringify: object => {
-    return JSON.stringify(object);
   },
 });
 
