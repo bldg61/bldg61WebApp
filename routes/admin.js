@@ -29,7 +29,7 @@ hbs.registerHelper({
   jsonStringify: object => {
     return JSON.stringify(object);
   },
-  toolCategory: (categoryIdToCheck, toolCategories) => {
+  isToolCategory: (categoryIdToCheck, toolCategories) => {
     return toolCategories.some(category => {
       return category.id === categoryIdToCheck;
     });

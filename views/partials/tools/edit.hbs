@@ -34,7 +34,7 @@
           {{#each allCategories}}
             <p>
               <label for="editCategoryIds{{...id}}-{{id}}">
-                {{#if (toolCategory id ...categories)}}
+                {{#if (isToolCategory id ...categories)}}
                   <input
                     checked
                     id="editCategoryIds{{...id}}-{{id}}"
