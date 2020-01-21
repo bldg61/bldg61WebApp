@@ -1,5 +1,7 @@
 const { query } = require('../db/index');
 
+const Tool = require('./tool.js')
+
 exports.all = async () => {
   const checkouts = (await query(
     `SELECT
@@ -112,6 +114,11 @@ async function validate(properties) {
 
   if (!properties.dueDate || properties.dueDate === '') {
     const error = 'Due Date cannot be blank';
+    errors.push(error);
+  }
+
+  if (!properties.toolId || properties.toolId === '' || !(await Tool.find(properties.toolId))) {
+    const error = 'Valid tool for checkout must be selected';
     errors.push(error);
   }
 
