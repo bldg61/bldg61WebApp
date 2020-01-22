@@ -24,6 +24,7 @@ describe('Checkouts', async () => {
     expect(checkout.errors).to.contain('Due Date cannot be blank')
     expect(checkout.errors).to.contain('Valid tool for checkout must be selected')
   });
+
   it('requires valid tool id', async () => {
     const category = await Category.create({ name: 'sewing' });
     const tool = await Tool.create({

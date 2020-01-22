@@ -1,6 +1,4 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
-// const Select = support.ui.Select
-// from selenium.webdriver.support.ui import Select
 
 const { expect } = require('chai');
 
@@ -11,7 +9,7 @@ const Tool = require('../../../models/tool');
 const User = require('../../../models/user');
 
 describe('Admin path', async () => {
-  it('allows admins to list and create checkouts', async () => {
+  it('allows admins to list, create, update, delete checkouts', async () => {
     const driver = await new Builder().forBrowser('chrome').build();
     try {
       const user = await User.create({
