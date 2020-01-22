@@ -16,13 +16,26 @@ describe('Checkouts', async () => {
       totalForCheckout: 3,
       categoryIds: [category.id],
     });
-    const checkout = await Checkout.create({})
+    const checkout = await Checkout.create({});
 
     expect(checkout.errors.length).to.equal(4);
-    expect(checkout.errors).to.contain('Patron Name cannot be blank')
-    expect(checkout.errors).to.contain('Patron Contact cannot be blank')
-    expect(checkout.errors).to.contain('Due Date cannot be blank')
-    expect(checkout.errors).to.contain('Valid tool for checkout must be selected')
+    expect(checkout.errors).to.contain('Patron Name cannot be blank');
+    expect(checkout.errors).to.contain('Patron Contact cannot be blank');
+    expect(checkout.errors).to.contain('Due Date cannot be blank');
+    expect(checkout.errors).to.contain('Valid tool for checkout must be selected');
+
+    const checkoutEmptyStrings = await Checkout.create({
+      patronName: '',
+      patronContact: '',
+      dueDate: '',
+      toolId: '',
+    });
+
+    expect(checkoutEmptyStrings.errors.length).to.equal(4);
+    expect(checkoutEmptyStrings.errors).to.contain('Patron Name cannot be blank');
+    expect(checkoutEmptyStrings.errors).to.contain('Patron Contact cannot be blank');
+    expect(checkoutEmptyStrings.errors).to.contain('Due Date cannot be blank');
+    expect(checkoutEmptyStrings.errors).to.contain('Valid tool for checkout must be selected');
   });
 
   it('requires valid tool id', async () => {
@@ -36,9 +49,9 @@ describe('Checkouts', async () => {
       patronName: 'Adam',
       patronContact: '1-900-Mix-A-Lot',
       dueDate: await getTodaysCheckoutDueDate(),
-      toolId: tool.id + 100
-    })
+      toolId: tool.id + 100,
+    });
 
-    expect(checkout.errors).to.contain('Valid tool for checkout must be selected')
+    expect(checkout.errors).to.contain('Valid tool for checkout must be selected');
   });
 });

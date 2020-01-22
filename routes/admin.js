@@ -12,19 +12,17 @@ hbs.registerHelper({
     return `${day}, ${date}`;
   },
   formFormattedDate: date => {
-    return date.getUTCFullYear() +
-      '-' + pad(date.getUTCMonth() + 1) +
-      '-' + pad(date.getUTCDate())
+    return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}`;
 
     function pad(number) {
       if (number < 10) {
-        return '0' + number;
+        return `0${number}`;
       }
       return number;
     }
   },
   isSelectedTool: (toolId1, toolId2) => {
-    return toolId1 === toolId2;
+    return toolId1 === toolId2 ? 'selected' : '';
   },
   jsonStringify: object => {
     return JSON.stringify(object);

@@ -1,4 +1,8 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
+const {
+  Builder,
+  By,
+  until,
+} = require('selenium-webdriver');
 
 const { expect } = require('chai');
 
@@ -22,7 +26,7 @@ describe('Admin path', async () => {
         name: 'Rigid Heddle Loom',
         categoryIds: [],
         totalForCheckout: 5,
-      })
+      });
 
       await driver.get('http://localhost:1500/admin');
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 6000);
@@ -45,7 +49,7 @@ describe('Admin path', async () => {
       await driver.executeScript(`
         document.getElementById('checkout-toolId-0').toggleAttribute('selected');
         document.getElementById('checkout-toolId-${tool.id}').toggleAttribute('selected');
-      `)
+      `);
       await driver.findElement(By.id('createCheckout')).click();
 
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('checkoutTabLink'))), 6000);

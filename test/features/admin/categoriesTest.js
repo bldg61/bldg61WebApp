@@ -4,7 +4,6 @@ const { expect } = require('chai');
 require('../../helpers/testSetup');
 
 const Category = require('../../../models/category');
-const Tool = require('../../../models/tool'); // is this being used?
 const User = require('../../../models/user');
 
 describe('Admin path', async () => {

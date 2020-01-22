@@ -1,6 +1,6 @@
 const { query } = require('../db/index');
 
-const Tool = require('./tool.js')
+const Tool = require('./tool.js');
 
 exports.all = async () => {
   const checkouts = (await query(
@@ -14,7 +14,7 @@ exports.all = async () => {
     FROM "checkouts", tools
     WHERE checkouts."toolId" = tools.id`,
   )).rows;
-  return checkouts
+  return checkouts;
 };
 
 exports.create = async properties => {
@@ -117,7 +117,7 @@ async function validate(properties) {
     errors.push(error);
   }
 
-  if (!properties.toolId || properties.toolId === '' || !(await Tool.find(properties.toolId))) {
+  if (!properties.toolId || !(await Tool.find(properties.toolId))) {
     const error = 'Valid tool for checkout must be selected';
     errors.push(error);
   }
