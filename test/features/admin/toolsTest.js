@@ -8,7 +8,7 @@ const Tool = require('../../../models/tool');
 const User = require('../../../models/user');
 
 describe('Admin path', async () => {
-  it('allows admins to see list, create, update, delete tools', async () => {
+  it('allows admins to list, create, update, delete tools', async () => {
     const driver = await new Builder().forBrowser('chrome').build();
     try {
       const user = await User.create({
@@ -39,6 +39,10 @@ describe('Admin path', async () => {
       await driver.findElement(By.id('adminGreeting')).getText().then(text => {
         expect(text).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`);
       });
+
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolTabLink'))), 6000);
+      await driver.findElement(By.id('toolTabLink')).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolsAvailable'))), 6000);
       await driver.findElement(By.id('toolsAvailable')).getText().then(text => {
         expect(text).to.contain(tool.name);
         expect(text).to.contain(tool.totalForCheckout);
@@ -48,12 +52,15 @@ describe('Admin path', async () => {
         expect(text).to.not.contain(category4.name);
       });
       await driver.findElement(By.id('addTool')).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('name'))), 6000);
-      await driver.findElement(By.id('name')).sendKeys('Soldering Iron');
-      await driver.findElement(By.id('totalForCheckout')).sendKeys('1');
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolName'))), 6000);
+      await driver.findElement(By.id('toolName')).sendKeys('Soldering Iron');
+      await driver.findElement(By.id('toolTotalForCheckout')).sendKeys('1');
       await driver.findElement(By.id(`categoryIds-checkbox-${category4.id}`)).click();
       await driver.findElement(By.id('createTool')).click();
 
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolTabLink'))), 6000);
+      await driver.findElement(By.id('toolTabLink')).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolsAvailable'))), 6000);
       await driver.findElement(By.id('toolsAvailable')).getText().then(text => {
         expect(text).to.contain('Soldering Iron');
         expect(text).to.contain('1');
@@ -62,10 +69,14 @@ describe('Admin path', async () => {
 
       const solderingIron = await Tool.findByName('Soldering Iron');
       await driver.findElement(By.id(`editTool-${solderingIron.id}`)).click();
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`name-${solderingIron.id}`))), 6000);
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`toolName-${solderingIron.id}`))), 6000);
       await driver.findElement(By.id(`editCategoryIdsCheckbox${solderingIron.id}-${category4.id}`)).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id(`submitEditTool-${solderingIron.id}`))), 6000);
       await driver.findElement(By.id(`submitEditTool-${solderingIron.id}`)).click();
 
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolTabLink'))), 6000);
+      await driver.findElement(By.id('toolTabLink')).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolsAvailable'))), 6000);
       await driver.findElement(By.id('toolsAvailable')).getText().then(text => {
         expect(text).to.contain('Soldering Iron');
         expect(text).to.contain('1');
@@ -76,6 +87,8 @@ describe('Admin path', async () => {
       await driver.wait(until.elementIsVisible(driver.findElement(By.id(`submitDeleteTool-${solderingIron.id}`))), 6000);
       await driver.findElement(By.id(`submitDeleteTool-${solderingIron.id}`)).click();
 
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('toolTabLink'))), 6000);
+      await driver.findElement(By.id('toolTabLink')).click();
       await driver.findElement(By.id('toolsAvailable')).getText().then(text => {
         expect(text).to.not.contain('Soldering Iron');
         expect(text).to.not.contain('1');

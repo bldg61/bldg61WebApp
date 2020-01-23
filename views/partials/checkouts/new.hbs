@@ -1,0 +1,77 @@
+<div id="newCheckoutForm" class="modal">
+  <div class="modal-content">
+    <h4>New Checkout</h4>
+    <form
+      action="/checkouts"
+      class="col s12"
+      method="post"
+    >
+      {{# if errors}}
+      <div class="row">
+        <div
+          id="checkoutError"
+          class="col s12 pink-text"
+        >
+        </div>
+      </div>
+      {{/if}}
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            id="checkout-patronName"
+            name="patronName"
+            type="text"
+          />
+          <label for="patronName">Patron Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            id="checkout-patronContact"
+            name="patronContact"
+            type="text"
+          />
+          <label for="patronContact">Patron Contact</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select id="checkout-toolId" name="toolId">
+            {{#if tools.length}}
+              <option id="checkout-toolId-0" value="" disabled selected>Tool for checkout</option>
+              {{#each tools}}
+                <option id="checkout-toolId-{{id}}" value="{{id}}">{{name}}</option>
+              {{/each}}
+            {{else}}
+              Oh dear we have no tools...
+            {{/if}}
+          </select>
+          <label for="toolId">Tool</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input
+            id="checkout-dueDate"
+            name="dueDate"
+            type="date"
+            value={{formFormattedDate todaysCheckoutDueDate}}
+          />
+          <label for="dueDate">Due Date</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close btn waves-effect waves-light pink">Cancel</a>
+        <button
+          class="modal-close btn waves-effect waves-light"
+          id="createCheckout"
+          name="action"
+          type="submit"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

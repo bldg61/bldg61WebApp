@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Checkouts
+      <a
+        class="btn-floating btn-large waves-effect waves-light pink right modal-trigger"
+        id="addCheckout"
+        href="#newCheckoutForm"
+      >
+        <i class="material-icons">add</i>
+      </a>
+    </span>
+
+    {{#if checkouts.length}}
+      <div class="row">
+        <div class="col s12">
+          <table id=checkoutsAvailable>
+            <thead>
+              <tr>
+                <th>Patron Name</th>
+                <th>Patron Contact</th>
+                <th>Tool</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {{#each checkouts}}
+              <tr>
+                <td>{{patronName}}</td>
+                <td>{{patronContact}}</td>
+                <td>{{toolName}}</td>
+                <td>{{dateLong dueDate}}</td>
+                <td class="right">
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#editCheckoutForm-{{id}}"
+                    id="editCheckout-{{id}}"
+                  >
+                    <i class="material-icons">edit</i>
+                  </a>
+                  <a
+                    class="waves-effect waves-light btn modal-trigger"
+                    href="#deleteCheckoutAlert-{{id}}"
+                    id="deleteCheckout-{{id}}"
+                  >
+                    <i class="material-icons">delete</i>
+                  </a>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{> checkouts/new}}
+  {{#each checkouts}}
+    {{> checkouts/edit errors=../errors tools=../tools}}
+    {{> checkouts/delete}}
+  {{/each}}
+</div>
