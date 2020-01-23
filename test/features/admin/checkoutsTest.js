@@ -76,6 +76,7 @@ describe('Admin path', async () => {
         expect(text).to.contain('Bleevins');
       });
 
+      await driver.findElement(By.id(`editCheckout-${zacksCheckout.id}`)).click();
       await driver.findElement(By.id(`deleteCheckout-${zacksCheckout.id}`)).click();
       await driver.wait(until.elementIsVisible(driver.findElement(By.id(`submitDeleteCheckout-${zacksCheckout.id}`))), 6000);
       await driver.findElement(By.id(`submitDeleteCheckout-${zacksCheckout.id}`)).click();

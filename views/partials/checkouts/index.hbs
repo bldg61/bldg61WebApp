@@ -61,13 +61,6 @@
                   >
                     <i class="material-icons">edit</i>
                   </a>
-                  <a
-                    class="waves-effect waves-light btn modal-trigger"
-                    href="#deleteCheckoutAlert-{{id}}"
-                    id="deleteCheckout-{{id}}"
-                  >
-                    <i class="material-icons">delete</i>
-                  </a>
                 </td>
               </tr>
               {{/each}}
@@ -81,6 +74,5 @@
   {{#each checkouts}}
     {{> checkouts/return}}
     {{> checkouts/edit errors=../errors tools=../tools}}
-    {{> checkouts/delete}}
   {{/each}}
 </div>

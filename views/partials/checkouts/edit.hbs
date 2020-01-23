@@ -1,6 +1,15 @@
 <div id="editCheckoutForm-{{id}}" class="modal">
   <div class="modal-content">
-    <h4>Edit Checkout</h4>
+    <h4>
+      Edit Checkout
+      <a
+      class="waves-effect waves-light btn modal-trigger right"
+      href="#deleteCheckoutAlert-{{id}}"
+      id="deleteCheckout-{{id}}"
+      >
+      <i class="material-icons">delete</i>
+    </a>
+    </h4>
     <form
       action="/checkouts/{{id}}"
       class="col s12"
@@ -77,3 +86,4 @@
     </form>
   </div>
 </div>
+{{> checkouts/delete}}
