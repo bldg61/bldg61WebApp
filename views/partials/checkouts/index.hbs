@@ -37,13 +37,23 @@
                   {{/if}}
                 </td>
                 <td class="right">
-                  <a
+                  {{#if returned}}
+                    <a
+                    class="waves-effect waves-light btn modal-trigger disabled"
+                    href="#returnCheckoutAlert-{{id}}"
+                    id="returnCheckout-{{id}}"
+                    >
+                      <i class="material-icons">assignment_return</i>
+                    </a>
+                  {{else}}
+                    <a
                     class="waves-effect waves-light btn modal-trigger"
                     href="#returnCheckoutAlert-{{id}}"
                     id="returnCheckout-{{id}}"
-                  >
-                    <i class="material-icons">assignment_return</i>
-                  </a>
+                    >
+                      <i class="material-icons">assignment_return</i>
+                    </a>
+                  {{/if}}
                   <a
                     class="waves-effect waves-light btn modal-trigger"
                     href="#editCheckoutForm-{{id}}"
