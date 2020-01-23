@@ -10,6 +10,7 @@ exports.all = async () => {
       checkouts."patronContact",
       checkouts."dueDate",
       checkouts."toolId",
+      checkouts."returned",
       tools."name" as "toolName"
     FROM "checkouts", tools
     WHERE checkouts."toolId" = tools.id`,
@@ -76,12 +77,14 @@ exports.update = async newProperties => {
     "patronName"=$1,
     "patronContact"=$2,
     "dueDate"=$3,
-    "toolId"=$4 WHERE id=$5 RETURNING *`,
+    "toolId"=$4,
+    "returned"=$5 WHERE id=$6 RETURNING *`,
     [
       properties.patronName,
       properties.patronContact,
       properties.dueDate,
       properties.toolId,
+      properties.returned,
       properties.id,
     ],
   )).rows[0];
