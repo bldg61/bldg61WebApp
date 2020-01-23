@@ -21,6 +21,9 @@ hbs.registerHelper({
       return number;
     }
   },
+  isCheckoutLate: dueDate => {
+    return new Date(dueDate) - new Date() <= 0;
+  },
   isSelectedTool: (toolId1, toolId2) => {
     return toolId1 === toolId2 ? 'selected' : '';
   },

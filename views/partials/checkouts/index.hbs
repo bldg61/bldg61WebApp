@@ -26,7 +26,11 @@
 
             <tbody>
               {{#each (orderCheckouts checkouts)}}
-              <tr>
+              {{#if (isCheckoutLate dueDate)}}
+                <tr class="pink lighten-5">
+              {{else}}
+                <tr>
+              {{/if}}
                 <td>{{patronName}}</td>
                 <td>{{patronContact}}</td>
                 <td>{{toolName}}</td>
