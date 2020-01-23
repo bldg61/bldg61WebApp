@@ -24,14 +24,27 @@ hbs.registerHelper({
   isSelectedTool: (toolId1, toolId2) => {
     return toolId1 === toolId2 ? 'selected' : '';
   },
-  jsonStringify: object => {
-    return JSON.stringify(object);
-  },
   isToolCategory: (categoryIdToCheck, toolCategories) => {
     return toolCategories.some(category => {
       return category.id === categoryIdToCheck;
     });
   },
+  jsonStringify: object => {
+    return JSON.stringify(object);
+  },
+  orderCheckouts: checkouts => {
+    const pendingCheckouts = checkouts
+    .filter(checkout => !checkout.returned)
+    .sort(byCheckoutDueDate);
+    const returnedCheckouts = checkouts
+    .filter(checkout => checkout.returned)
+    .sort(byCheckoutDueDate);
+    return [ ...pendingCheckouts, ...returnedCheckouts];
+
+    function byCheckoutDueDate(checkoutA, checkoutB) {
+      return new Date(checkoutA.dueDate) - new Date(checkoutB.dueDate)
+    }
+  }
 });
 
 router.get('/', adminController.index);
