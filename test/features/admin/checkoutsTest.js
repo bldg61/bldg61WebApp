@@ -134,7 +134,10 @@ describe('Admin path', async () => {
       await driver.findElement(By.id('checkoutTabLink')).click();
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('checkoutsAvailable'))), 6000);
       await driver.findElement(By.id('checkoutsAvailable')).getText().then(text => {
-        expect(text).to.contain('assignment_turned_in');
+        const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date());
+        const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date());
+        const expectedReturnDate = `${day}, ${date}`;
+        expect(text).to.contain(expectedReturnDate);
       });
     } finally {
       await driver.quit();

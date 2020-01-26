@@ -1,2 +1,2 @@
 ALTER TABLE "checkouts"
-ADD "returned" BOOLEAN NOT NULL DEFAULT false;
+ADD "returned" DATE;

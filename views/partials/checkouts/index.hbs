@@ -35,11 +35,7 @@
                 <td>{{patronContact}}</td>
                 <td>{{toolName}}</td>
                 <td>{{dateLong dueDate}}</td>
-                <td>
-                  {{#if returned}}
-                    <i class="material-icons">assignment_turned_in</i>
-                  {{/if}}
-                </td>
+                <td>{{dateLong returned}}</td>
                 <td class="right">
                   {{#if returned}}
                     <a

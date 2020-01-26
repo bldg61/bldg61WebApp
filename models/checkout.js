@@ -78,13 +78,14 @@ exports.update = async newProperties => {
     "patronContact"=$2,
     "dueDate"=$3,
     "toolId"=$4,
-    "returned"=$5 WHERE id=$6 RETURNING *`,
+    "returned"=$5,
+    "updatedAt"=current_timestamp WHERE id=$6 RETURNING *`,
     [
       properties.patronName,
       properties.patronContact,
       properties.dueDate,
       properties.toolId,
-      properties.returned,
+      properties.returned ? new Date() : undefined,
       properties.id,
     ],
   )).rows[0];

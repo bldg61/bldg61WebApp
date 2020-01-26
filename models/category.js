@@ -77,7 +77,8 @@ exports.update = async newProperties => {
 
   const updatedCategory = (await query(
     `UPDATE "categories" SET
-    "name"=$1 WHERE id=$2 RETURNING *`,
+    "name"=$1,
+    "updatedAt"=current_timestamp WHERE id=$2 RETURNING *`,
     [
       properties.name,
       properties.id,
