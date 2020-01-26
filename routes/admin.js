@@ -36,11 +36,14 @@ hbs.registerHelper({
     .sort(byCheckoutDueDate);
     const returnedCheckouts = checkouts
     .filter(checkout => checkout.returned)
-    .sort(byCheckoutDueDate);
+    .sort(byReturnedDate);
     return [ ...pendingCheckouts, ...returnedCheckouts];
 
     function byCheckoutDueDate(checkoutA, checkoutB) {
       return new Date(checkoutA.dueDate) - new Date(checkoutB.dueDate)
+    }
+    function byReturnedDate(checkoutA, checkoutB) {
+      return new Date(checkoutA.returned) - new Date(checkoutB.returned)
     }
   }
 });
