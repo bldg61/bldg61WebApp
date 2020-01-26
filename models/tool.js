@@ -126,7 +126,8 @@ exports.update = async newProperties => {
   const updatedTool = (await query(
     `UPDATE "tools" SET
     "name"=$1,
-    "totalForCheckout"=$2 WHERE id=$3 RETURNING *`,
+    "totalForCheckout"=$2,
+    "updatedAt"=current_timestamp WHERE id=$3 RETURNING *`,
     [
       properties.name,
       properties.totalForCheckout,

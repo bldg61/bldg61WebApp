@@ -1,23 +1,30 @@
-<div id="deleteCheckoutAlert-{{id}}" class="modal">
+<div id="returnCheckoutAlert-{{id}}" class="modal">
   <div class="modal-content">
     <form
-      action="/checkouts/{{id}}/delete"
+      action="/checkouts/{{id}}"
       class="col s21"
       method="post"
     >
       <h4>
-        Are you sure you want to delete the {{toolName}} for {{patronName}}?
+        Are you sure you want to return the {{toolName}} for {{patronName}}?
       </h4>
+      <input
+        class="hide"
+        id="checkout-returned-{{id}}"
+        name="returned"
+        type="text"
+        value="true"
+      />
       <div class="modal-footer">
         <a class="modal-close btn waves-effect waves-light pink">
           Cancel
         </a>
         <button
           class="modal-close btn waves-effect waves-light"
-          id="submitDeleteCheckout-{{id}}"
+          id="submitReturnCheckout-{{id}}"
           type="submit"
         >
-          Delete
+          Return
         </button>
       </div>
     </form>

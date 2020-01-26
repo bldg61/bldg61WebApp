@@ -20,33 +20,49 @@
                 <th>Patron Contact</th>
                 <th>Tool</th>
                 <th>Due Date</th>
+                <th>Returned</th>
               </tr>
             </thead>
 
             <tbody>
-              {{#each checkouts}}
-              <tr>
-                <td>{{patronName}}</td>
-                <td>{{patronContact}}</td>
-                <td>{{toolName}}</td>
-                <td>{{dateLong dueDate}}</td>
-                <td class="right">
-                  <a
-                    class="waves-effect waves-light btn modal-trigger"
-                    href="#editCheckoutForm-{{id}}"
-                    id="editCheckout-{{id}}"
-                  >
-                    <i class="material-icons">edit</i>
-                  </a>
-                  <a
-                    class="waves-effect waves-light btn modal-trigger"
-                    href="#deleteCheckoutAlert-{{id}}"
-                    id="deleteCheckout-{{id}}"
-                  >
-                    <i class="material-icons">delete</i>
-                  </a>
-                </td>
-              </tr>
+              {{#each (orderCheckouts checkouts)}}
+                {{#if (isCheckoutLate dueDate)}}
+                  <tr class="pink lighten-5">
+                {{else}}
+                  <tr>
+                {{/if}}
+                  <td>{{patronName}}</td>
+                  <td>{{patronContact}}</td>
+                  <td>{{toolName}}</td>
+                  <td>{{dateLong dueDate}}</td>
+                  <td>{{dateLong returned}}</td>
+                  <td class="right">
+                    {{#if returned}}
+                      <a
+                      class="waves-effect waves-light btn modal-trigger disabled"
+                      href="#returnCheckoutAlert-{{id}}"
+                      id="returnCheckout-{{id}}"
+                      >
+                        <i class="material-icons">assignment_return</i>
+                      </a>
+                    {{else}}
+                      <a
+                      class="waves-effect waves-light btn modal-trigger"
+                      href="#returnCheckoutAlert-{{id}}"
+                      id="returnCheckout-{{id}}"
+                      >
+                        <i class="material-icons">assignment_return</i>
+                      </a>
+                    {{/if}}
+                    <a
+                      class="waves-effect waves-light btn modal-trigger"
+                      href="#editCheckoutForm-{{id}}"
+                      id="editCheckout-{{id}}"
+                    >
+                      <i class="material-icons">edit</i>
+                    </a>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -56,7 +72,7 @@
   </div>
   {{> checkouts/new}}
   {{#each checkouts}}
+    {{> checkouts/return}}
     {{> checkouts/edit errors=../errors tools=../tools}}
-    {{> checkouts/delete}}
   {{/each}}
 </div>
