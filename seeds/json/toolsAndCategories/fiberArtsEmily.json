@@ -1,0 +1,43 @@
+{
+  "Sewing Machine": [
+    "fiber arts",
+    "sewing",
+    "quilting"
+  ],
+  "Serger": [
+    "fiber arts",
+    "sewing"
+  ],
+  "Industrial Sewing Machine": [
+    "fiber arts",
+    "sewing",
+    "leatherwork"
+  ],
+  "Heavy Duty Sewing Machine": [
+    "fiber arts",
+    "sewing",
+    "leatherwork"
+  ],
+  "Embroidery Machine": [
+    "fiber arts",
+    "embroidery",
+    "digital fabrication"
+  ],
+  "Spinning Wheel": [
+    "fiber arts",
+    "spinning"
+  ],
+  "Drum Carder": [
+    "fiber arts",
+    "spinning",
+    "felting"
+  ],
+  "Sewing Awl": [
+    "fiber arts",
+    "leatherwork",
+    "sewing"
+  ],
+  "Assorted Leatherworking Supplies": [
+    "leatherwork"
+  ]
+}
