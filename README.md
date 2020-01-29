@@ -43,6 +43,12 @@ Mrrrrbe todos:
       })
     ```
     This will return a pending promise, but a user will have been created in the database.
+1. To run json toolsAndCategories style seeds:
+
+    ```
+    const runSeeds = require('./lib/runSeeds/json/toolsAndCategories')
+    runSeeds()
+    ```
 
 ### Deployed app setup (Heroku)
 * running migrations:
@@ -56,6 +62,11 @@ Mrrrrbe todos:
 
     ```
     heroku pg:psql
+    ```
+* dropping into shell
+
+    ```
+    heroku run bash
     ```
 
 ### Checking out the local running server on other devices (must be on same wifi)
