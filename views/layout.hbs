@@ -8,19 +8,21 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <nav class="grey darken-4">
-      <div class="container">
-        <div class="nav-wrapper">
-          <a href="/" class="brand-logo">BLDG 61</a>
-          {{#if currentUser}}
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-              <li><a href="signupCompiler">Signup Compiler</a></li>
-              <li><a href="admin">Admin</a></li>
-            </ul>
-          {{/if}}
+    <div class="navbar-fixed">
+      <nav class="grey darken-4">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="/" class="brand-logo">BLDG 61</a>
+            {{#if currentUser}}
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="signupCompiler">Signup Compiler</a></li>
+                <li><a href="admin">Admin</a></li>
+              </ul>
+            {{/if}}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
     <div class="container" id="scroll-container">
       {{{body}}}
     </div>
