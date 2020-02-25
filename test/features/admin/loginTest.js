@@ -6,7 +6,7 @@ require('../../helpers/testSetup');
 const User = require('../../../models/user');
 
 describe('Admin path', async () => {
-  it('allows users to login with good email and password', async () => {
+  it('allows users to login with good email and password and logout', async () => {
     const driver = await new Builder().forBrowser('chrome').build();
     try {
       const user = await User.create({
@@ -43,6 +43,23 @@ describe('Admin path', async () => {
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('adminGreeting'))), 6000);
       await driver.findElement(By.id('adminGreeting')).getText().then(text => {
         expect(text).to.equal(`Welcome, ${user.firstName} ${user.lastName}!`);
+      });
+      await driver.wait(until.elementIsVisible(driver.findElement(By.className('nav-wrapper'))), 6000);
+      await driver.findElement(By.className('nav-wrapper')).getText().then(text => {
+        expect(text).to.contain('Signup Compiler');
+        expect(text).to.contain('Admin');
+        expect(text).to.contain('Logout');
+      });
+
+      await driver.findElement(By.id('logout')).click();
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('scroll-container'))), 6000);
+      await driver.findElement(By.id('scroll-container')).getText().then(text => {
+        expect(text).to.contain('Guided Access');
+      });
+      await driver.findElement(By.className('nav-wrapper')).getText().then(text => {
+        expect(text).to.not.contain('Signup Compiler');
+        expect(text).to.not.contain('Admin');
+        expect(text).to.not.contain('Logout');
       });
     } finally {
       await driver.quit();

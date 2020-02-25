@@ -15,6 +15,13 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.destroy = async (req, res, next) => {
+  delete req.session.userId;
+  req.session.save(err => {
+    res.redirect('/')
+  })
+};
+
 exports.new = (req, res) => {
   return res.render('login');
 };
