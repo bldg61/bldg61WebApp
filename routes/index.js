@@ -4,6 +4,8 @@ const hbs = require('hbs');
 
 const router = express.Router();
 
+const User = require('../models/user');
+
 const getNewToken = require('../lib/getNewToken');
 const handleLibCalError = require('../lib/handleLibCalError');
 const orderEventsByDay = require('../lib/orderEventsByDay');
@@ -42,6 +44,7 @@ hbs.registerHelper({
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
+  const currentUser = await User.find(req.session.userId);
   if (!process.env.ACCESS_TOKEN) { return getNewToken(req, res, next); }
 
   const url = process.env.LIBCAL_EVENTS_URL;
@@ -56,8 +59,9 @@ router.get('/', async (req, res, next) => {
     const days = orderEventsByDay(events);
 
     res.render('index', {
-      title: 'BLDG 61 Calendar',
+      currentUser,
       days,
+      title: 'BLDG 61 Calendar',
     });
   }).catch(error => {
     handleLibCalError(error, req, res, next);

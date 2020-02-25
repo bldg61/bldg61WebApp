@@ -68,7 +68,15 @@ Mrrrrbe todos:
     ```
     heroku run bash
     ```
+* cloning prod postgres database to local: run from the *local* shell and replace <DATABASE_URL> with the full heroku DATABASE_URL
 
+    ```
+    pg_dump <DATABASE_URL> > dbDump.sql
+    dropdb bldg61_development
+    createdb bldg61_development
+    psql postgres://localhost/bldg61_development < dbDump.sql
+
+    ```
 ### Checking out the local running server on other devices (must be on same wifi)
 
 1. Get the running server computer's LOCAL ip address

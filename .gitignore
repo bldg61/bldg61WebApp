@@ -1,3 +1,7 @@
+dbDump.sql
+
+# predefined stuff below
+
 # Logs
 logs
 *.log

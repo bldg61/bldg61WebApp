@@ -8,10 +8,32 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1 class="center-align">{{title}}</h1>
+    <div class="navbar-fixed">
+      <nav class="grey darken-4">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="/" class="brand-logo">BLDG 61</a>
+            {{#if currentUser}}
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="signupCompiler">Signup Compiler</a></li>
+                <li><a href="admin">Admin</a></li>
+              </ul>
+            {{/if}}
+          </div>
+        </div>
+      </nav>
+    </div>
+    {{#if currentUser}}
+      <ul class="sidenav" id="nav-mobile">
+        <li><a href="signupCompiler">Signup Compiler</a></li>
+        <li><a href="admin">Admin</a></li>
+      </ul>
+    {{/if}}
     <div class="container" id="scroll-container">
       {{{body}}}
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/javascripts/materializeScriptInitializations.js"></script>
   </body>
 </html>
