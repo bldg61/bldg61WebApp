@@ -14,7 +14,8 @@
           <div class="nav-wrapper">
             <a href="/" class="brand-logo">BLDG 61</a>
             {{#if currentUser}}
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
                 <li><a href="signupCompiler">Signup Compiler</a></li>
                 <li><a href="admin">Admin</a></li>
               </ul>
@@ -23,6 +24,12 @@
         </div>
       </nav>
     </div>
+    {{#if currentUser}}
+      <ul class="sidenav" id="nav-mobile">
+        <li><a href="signupCompiler">Signup Compiler</a></li>
+        <li><a href="admin">Admin</a></li>
+      </ul>
+    {{/if}}
     <div class="container" id="scroll-container">
       {{{body}}}
     </div>
