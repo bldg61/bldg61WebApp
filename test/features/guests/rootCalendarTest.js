@@ -14,8 +14,6 @@ describe('Root path', async () => {
 
     expect(res.err).to.be.undefined; // eslint-disable-line no-unused-expressions
     expect(res.text).to.include('BLDG 61 Calendar');
-    expect(res.text).to.include('Laser Cutting Guided Access');
-    expect(res.text).to.include('CNC Guided Access');
-    expect(res.text).to.include('Open Studio');
+    expect(res.text).to.include('Laser Guided Access');
   }).timeout(5000);
 });
