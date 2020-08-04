@@ -45,6 +45,7 @@ exports.create = async properties => {
 };
 
 exports.find = async id => {
+  if (!id) return;
   const user = (await query(
     'SELECT * FROM "users" WHERE "id" = $1 LIMIT 1',
     [
