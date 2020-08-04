@@ -2,6 +2,9 @@
   "name": "libcalwrangler",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node" :"~12.18.3"
+  },
   "scripts": {
     "coverage": "nyc mocha --recursive --exit",
     "db:createMigration": "node ./lib/createMigration.js",
