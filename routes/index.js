@@ -47,25 +47,29 @@ router.get('/', async (req, res, next) => {
   const currentUser = await User.find(req.session.userId);
   if (!process.env.ACCESS_TOKEN) { return getNewToken(req, res, next); }
 
-  const url = process.env.LIBCAL_EVENTS_URL;
+  const url1 = process.env.LIBCAL_EVENTS_URL;
+  const url2 = process.env.LIBCAL_EVENTS_URL2;
   const config = {
     headers: {
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     },
   };
 
-  axios.get(url, config).then(response => {
-    const { events } = response.data;
-    const days = orderEventsByDay(events);
+  try {
+    const calendar1 = await axios.get(url1, config);
+    const calendar2 = await axios.get(url2, config);
+    const events1 = calendar1.data.events;
+    const events2 = calendar2.data.events;
+    const days = orderEventsByDay([ ...events1, ...events2 ]);
 
     res.render('index', {
       currentUser,
       days,
       title: 'BLDG 61 Calendar',
     });
-  }).catch(error => {
+  } catch (error) {
     handleLibCalError(error, req, res, next);
-  });
+  }
 });
 
 module.exports = router;
